@@ -1,7 +1,7 @@
 package com.team14.cms;
 
 public abstract class User implements Observer {
-    String name, id, passwd;
+    private String id, name, password;
 
     public String getId() {
         return id;
@@ -17,10 +17,10 @@ public abstract class User implements Observer {
         this.name = name;
     }
 
-    public String getPasswd() {
-        return passwd;
+    public String getPassword() {
+        return password;
     }
-    public void setPasswd(String passwd) {
-        this.passwd = passwd;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

@@ -2,7 +2,7 @@ package com.team14.cms;
 
 import java.util.List;
 
-public class System extends Subject {
+public class CourseManagementSystem extends Subject {
     // Lists for every user in the system
     List<User> administrationList;
     List<User> professorList;

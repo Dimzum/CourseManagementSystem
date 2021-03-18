@@ -3,6 +3,9 @@ package com.team14.cms;
 import java.util.List;
 
 public class Administration extends User {
+    List<User> studentList;
+    List<User> professorList;
+    List<Course> courseList;
 
     public void createCourse(String name, String crn, float creditValue) {
 
