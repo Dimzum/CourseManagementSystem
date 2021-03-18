@@ -10,7 +10,12 @@ public class Course {
 
     boolean isOpen;
     List<Student> waitlist;
+    int maxWaitlist = 10;
 
     Professor prof;
     List<Student> classList;
+
+    public boolean isWaitlistFull() {
+        return (waitlist.size() == maxWaitlist);
+    }
 }

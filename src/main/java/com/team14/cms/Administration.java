@@ -2,11 +2,7 @@ package com.team14.cms;
 
 import java.util.List;
 
-public class Administration {
-
-    List<Course> courseList;
-    List<Professor> profList;
-    List<Student> studentList;
+public class Administration extends User {
 
     public void createCourse(String name, String crn, float creditValue) {
 
@@ -29,6 +25,11 @@ public class Administration {
     }
 
     public void deleteStudent() {
+
+    }
+
+    @Override
+    public void update() {
 
     }
 }

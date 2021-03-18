@@ -1,6 +1,6 @@
 package com.team14.cms;
 
-public abstract class User extends Observer {
+public abstract class User implements Observer {
     String name, id, passwd;
 
     public String getId() {
