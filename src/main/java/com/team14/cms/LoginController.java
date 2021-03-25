@@ -35,7 +35,7 @@ class LoginadminController extends LoginController {
         Administration admin = adminDao.get(1001);
         if ("admin".equals(username) && "123456".equals(password)){
             admin.login();
-            return "admin/profile";
+            return "admin/main";
         }else{
             //map.put("msg", "Username or Password is wrong.");
             return "loginAdmin";

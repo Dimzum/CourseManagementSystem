@@ -24,12 +24,12 @@ public class AdminController {
     public String profile(Model model){
         Administration admin = adminDao.get(1001);
 
+        model.addAttribute("id", admin.getId());
+        model.addAttribute("name", "Admin");
         if (admin.isLoggedin()){
-            model.addAttribute("id", admin.getId());
-            model.addAttribute("name", "Admin");
             return "admin/profile";
         }else{
-            return "admin/login";
+            return "loginAdmin";
         }
 
 
