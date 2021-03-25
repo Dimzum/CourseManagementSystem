@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Main Page</title>
+    <style type="text/css">
+        body{
+            background: #FFF ;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .container{
+            background: #FFF;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .header{
+            padding: 10px 0;
+            background: #eee;
+        }
+
+        .sidebar{
+            float: left;
+            width: 200px;
+            background: #FFF;
+        }
+
+        .maincontent{
+            width: 570px;
+            background: #FFF;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <form action="/admin/logout" method="get">
+            <input value="Log out" type="submit"/>
+        </form>
+    </div>
+
+    <div class="content">
+        <div class="sidebar">
+            <h1>
+                <form action="/admin/profile" method="get">
+                    <input value="Profile" type="submit"/>
+                </form>
+            </h1>
+            <h1>
+                <form action="/admin/proflist" method="get">
+                    <input value="Professor List" type="submit"/>
+                </form>
+            </h1>
+            <h1>
+                <form action="/admin/stulist" method="get">
+                    <input value="Student List" type="submit"/>
+                </form>
+            </h1>
+            <h1>
+                <form action="/admin/courselist" method="get">
+                    <input value="Course List" type="submit"/>
+                </form>
+            </h1>
+            <h1>
+                <form action="/admin/intimereq" method="get">
+                    <input value="In-time Request" type="submit"/>
+                </form>
+            </h1>
+            <h1>
+                <form action="/admin/latereq" method="get">
+                    <input value="Late Request" type="submit"/>
+                </form>
+            </h1>
+        </div>
+        <div class="maincontent">
+            <h1>in-time request</h1>
+        </div>
+    </div>
+</div>
+</body>
+</html>

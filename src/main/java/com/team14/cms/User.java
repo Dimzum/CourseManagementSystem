@@ -1,20 +1,30 @@
 package com.team14.cms;
 
 public abstract class User implements Observer {
-    protected String id, name, password;
+    public Integer id;
+    public String fname, lname;
+    protected String password;
+    protected boolean loggedin;
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return fname;
     }
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String fname) {
+        this.fname = fname;
+    }
+
+    public String getLastName() {
+        return lname;
+    }
+    public void setLastName(String lname) {
+        this.lname = lname;
     }
 
     public String getPassword() {
@@ -22,5 +32,16 @@ public abstract class User implements Observer {
     }
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isLoggedin(){
+        return this.loggedin;
+    }
+    public void login(){
+        this.loggedin = true;
+    }
+
+    public void logout(){
+        this.loggedin = false;
     }
 }
