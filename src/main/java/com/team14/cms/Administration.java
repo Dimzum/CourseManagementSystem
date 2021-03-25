@@ -7,6 +7,14 @@ public class Administration extends User {
     List<User> professorList;
     List<Course> courseList;
 
+    public Administration(Integer id, String fname, String lname, String password){
+        this.id = id;
+        this.fname = fname;
+        this.lname = lname;
+        this.password = password;
+        this.loggedin = false;
+    }
+
     public void createCourse(String name, String crn, float creditValue) {
 
     }
