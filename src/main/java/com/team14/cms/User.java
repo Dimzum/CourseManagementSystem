@@ -23,6 +23,7 @@ public abstract class User implements Observer {
     public String getLastName() {
         return lname;
     }
+
     public void setLastName(String fname) {
         this.lname = lname;
     }
@@ -30,10 +31,10 @@ public abstract class User implements Observer {
     public boolean isLoggedin() {
         return loggedin;
     }
-    public void login(){
+    public void login() {
         loggedin = true;
     }
-    public void logout(){
+    public void logout() {
         loggedin = false;
     }
 
