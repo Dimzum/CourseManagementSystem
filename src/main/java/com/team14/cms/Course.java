@@ -3,6 +3,7 @@ package com.team14.cms;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Course extends Subject {
     String name;
@@ -11,13 +12,13 @@ public class Course extends Subject {
     List<Course> prerequisites;
 
     private Professor prof;             // prof assigned to the course
-    private HashMap<Student, Float> classList;    // students registered in the course
+    private Map<Student, Float> classList;    // students registered in the course
 
     private boolean isOpen;            // open for registration
     private final int maxWaitlist = 10;
     private List<Student> waitlist;
 
-    private HashMap<CourseDeliverable, HashMap<Student, Float>> courseDeliverables;
+    private Map<CourseDeliverable, Map<Student, Float>> courseDeliverables;
 
     public Course() {
         classList = new HashMap<>();
@@ -55,9 +56,9 @@ public class Course extends Subject {
         return new ArrayList<>(classList.keySet());
     }
 
-    public Student getStudent(String id) {
+    public Student getStudent(int id) {
         for (Student s : classList.keySet()) {
-            if (s.getId().equals(id)) {
+            if (s.getId() == id) {
                 return s;
             }
         }

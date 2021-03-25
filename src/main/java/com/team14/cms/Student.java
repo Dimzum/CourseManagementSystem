@@ -1,19 +1,30 @@
 package com.team14.cms;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Student extends User {
-    private List<Course> courses;
-    private List<Course> taken;
     public String birthday;
 
-    public Student(Integer id, String fname, String lname, String password, String birthday) {
+    private List<Course> courses;
+    private List<Course> coursesTaken;
+
+    public Student() {
+        courses = new ArrayList<>();
+        coursesTaken = new ArrayList<>();
+    }
+
+    public Student(int id, String fName, String lName, String password, String birthday) {
         this.id = id;
-        this.fname = fname;
-        this.lname = lname;
+        this.fName = fName;
+        this.lName = lName;
         this.password = password;
+        this.isLoggedIn = false;
+
         this.birthday = birthday;
-        this.loggedin = false;
+
+        courses = new ArrayList<>();
+        coursesTaken = new ArrayList<>();
     }
 
     public void registerInCourse(Course course) {
@@ -24,7 +35,7 @@ public class Student extends User {
 
     }
 
-    public void submitCourseDeliverable(Deliverable courseDeliverable) {
+    public void submitCourseDeliverable(CourseDeliverable courseDeliverable) {
 
     }
 

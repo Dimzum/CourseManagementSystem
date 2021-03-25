@@ -1,18 +1,29 @@
 package com.team14.cms;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Administration extends User {
-    List<User> studentList;
-    List<User> professorList;
+    List<Student> studentList;
+    List<Professor> professorList;
     List<Course> courseList;
 
-    public Administration(Integer id, String fname, String lname, String password){
+    public Administration() {
+        studentList = new ArrayList<>();
+        professorList = new ArrayList<>();
+        courseList = new ArrayList<>();
+    }
+
+    public Administration(Integer id, String fName, String lName, String password){
         this.id = id;
-        this.fname = fname;
-        this.lname = lname;
+        this.fName = fName;
+        this.lName = lName;
         this.password = password;
-        this.loggedin = false;
+        this.isLoggedIn = false;
+
+        studentList = new ArrayList<>();
+        professorList = new ArrayList<>();
+        courseList = new ArrayList<>();
     }
 
     public void createCourse(String name, String crn, float creditValue) {
