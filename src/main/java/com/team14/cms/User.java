@@ -1,7 +1,7 @@
 package com.team14.cms;
 
 public abstract class User implements Observer {
-    private String id, name, password;
+    protected String id, name, password;
 
     public String getId() {
         return id;

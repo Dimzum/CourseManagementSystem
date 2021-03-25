@@ -3,7 +3,13 @@ package com.team14.cms;
 import java.util.List;
 
 public class Student extends User {
-    List<Course> courses;
+    private List<Course> courses;
+
+    public Student(String id, String name, String password) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+    }
 
     public void registerInCourse(Course course) {
 
@@ -13,7 +19,7 @@ public class Student extends User {
 
     }
 
-    public void submitCourseDeliverable(Deliverable courseDeliverable) {
+    public void submitCourseDeliverable(CourseDeliverable courseDeliverable) {
 
     }
 

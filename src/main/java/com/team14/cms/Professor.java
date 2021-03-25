@@ -9,7 +9,7 @@ public class Professor extends User {
 
     }
 
-    public void deleteCourseDeliverable(Course course, Deliverable deliverable) {
+    public void deleteCourseDeliverable(Course course, CourseDeliverable courseDeliverable) {
 
     }
 

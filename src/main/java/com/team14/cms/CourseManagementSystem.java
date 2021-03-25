@@ -2,7 +2,7 @@ package com.team14.cms;
 
 import java.util.List;
 
-public class CourseManagementSystem extends Subject {
+public class CourseManagementSystem {
     // Lists for every user in the system
     List<User> administrationList;
     List<User> professorList;
@@ -11,10 +11,4 @@ public class CourseManagementSystem extends Subject {
     // List for every course in the system
     List<Course> courseList;
 
-    @Override
-    public void notifyObservers() {
-        for (Observer o: observers) {
-            o.update();
-        }
-    }
 }
