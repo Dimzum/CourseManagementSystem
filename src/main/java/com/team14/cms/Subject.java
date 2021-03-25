@@ -1,10 +1,9 @@
 package com.team14.cms;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Subject {
-    List<Observer> observers = new ArrayList<>();
+    List<Observer> observers;
 
     public void attach(Observer obs) {
         observers.add(obs);
