@@ -20,7 +20,9 @@ public class Course extends Subject {
     private HashMap<CourseDeliverable, HashMap<Student, Float>> courseDeliverables;
 
     public Course() {
-
+        classList = new HashMap<>();
+        waitlist = new ArrayList<>();
+        courseDeliverables = new HashMap<>();
     }
 
     public Course(String name, String crn, float creditValue, List<Course> prerequisites, boolean isOpen) {
@@ -29,6 +31,10 @@ public class Course extends Subject {
         this.creditValue = creditValue;
         this.prerequisites = prerequisites;
         this.isOpen = isOpen;
+
+        classList = new HashMap<>();
+        waitlist = new ArrayList<>();
+        courseDeliverables = new HashMap<>();
     }
 
     public Professor getProf() {

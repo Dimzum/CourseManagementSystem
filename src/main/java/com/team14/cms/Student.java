@@ -1,5 +1,6 @@
 package com.team14.cms;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Student extends User {
@@ -9,6 +10,8 @@ public class Student extends User {
         this.id = id;
         this.name = name;
         this.password = password;
+
+        courses = new ArrayList<>();
     }
 
     public void registerInCourse(Course course) {

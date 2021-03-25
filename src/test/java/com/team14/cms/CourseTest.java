@@ -18,6 +18,9 @@ public class CourseTest {
     public void testAddToCourse() {
         Student student = new Student("101", "john", "password");
         course.addToCourse(student);
+
         assertEquals(student.getId(), course.getStudent(student.getId()).getId());
+        assertEquals(student.getName(), course.getStudent(student.getId()).getName());
+        assertEquals(student.getPassword(), course.getStudent(student.getId()).getPassword());
     }
 }
