@@ -7,17 +7,13 @@ public abstract class CourseDeliverable {
         Exam
     }
 
-    protected String name;
-    protected String dueDate;
+    public String name;
+    public String deadline;
+
     protected int grade;
 
     public CourseDeliverable() {
 
-    }
-
-    public CourseDeliverable(String name, String dueDate) {
-        this.name = name;
-        this.dueDate = dueDate;
     }
 
     public int getGrade() {
@@ -27,38 +23,41 @@ public abstract class CourseDeliverable {
         this.grade = grade;
     }
 
-    protected abstract DeliverableType getType();
+    public abstract DeliverableType getType();
 }
 
 class Assignment extends CourseDeliverable {
-    public Assignment(String name, String dueDate) {
-        super(name, dueDate);
+    public Assignment(String name, String deadline) {
+        this.name = name;
+        this.deadline = deadline;
     }
 
     @Override
-    protected DeliverableType getType() {
+    public DeliverableType getType() {
         return DeliverableType.Assignment;
     }
 }
 
 class Test extends CourseDeliverable {
-    public Test(String name, String dueDate) {
-        super(name, dueDate);
+    public Test(String name, String deadline) {
+        this.name = name;
+        this.deadline = deadline;
     }
 
     @Override
-    protected DeliverableType getType() {
+    public DeliverableType getType() {
         return DeliverableType.Test;
     }
 }
 
 class Exam extends CourseDeliverable {
-    public Exam(String name, String dueDate) {
-        super(name, dueDate);
+    public Exam(String name, String deadline) {
+        this.name = name;
+        this.deadline = deadline;
     }
 
     @Override
-    protected DeliverableType getType() {
+    public DeliverableType getType() {
         return DeliverableType.Exam;
     }
 }
