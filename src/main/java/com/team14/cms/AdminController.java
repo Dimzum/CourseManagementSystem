@@ -1,11 +1,9 @@
 package com.team14.cms;
 
-import com.team14.cms.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collection;
 
@@ -26,7 +24,7 @@ public class AdminController {
 
         model.addAttribute("id", admin.getId());
         model.addAttribute("name", "Admin");
-        if (admin.isLoggedin()){
+        if (admin.isLoggedIn()){
             return "admin/profile";
         }else{
             return "loginAdmin";

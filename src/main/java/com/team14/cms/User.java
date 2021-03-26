@@ -1,9 +1,15 @@
 package com.team14.cms;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class User implements Observer {
+    public boolean isLoggedIn;
+
     protected int id;
     protected String fName, lName, password;
-    public boolean isLoggedIn;
+
+    protected List<Course> courses = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -33,7 +39,7 @@ public abstract class User implements Observer {
         this.password = password;
     }
 
-    public boolean isLoggedin() {
+    public boolean isLoggedIn() {
         return isLoggedIn;
     }
 
@@ -44,7 +50,7 @@ public abstract class User implements Observer {
         toggleLogin();
     }
 
-    public void toggleLogin() {
+    private void toggleLogin() {
         isLoggedIn = !isLoggedIn;
     }
 }

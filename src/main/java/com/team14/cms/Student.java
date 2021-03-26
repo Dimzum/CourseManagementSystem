@@ -6,13 +6,7 @@ import java.util.List;
 public class Student extends User {
     public String birthday;
 
-    private List<Course> courses;
-    private List<Course> coursesTaken;
-
-    public Student() {
-        courses = new ArrayList<>();
-        coursesTaken = new ArrayList<>();
-    }
+    private List<Course> coursesTaken = new ArrayList<>();
 
     public Student(int id, String fName, String lName, String password, String birthday) {
         this.id = id;
@@ -22,9 +16,6 @@ public class Student extends User {
         this.isLoggedIn = false;
 
         this.birthday = birthday;
-
-        courses = new ArrayList<>();
-        coursesTaken = new ArrayList<>();
     }
 
     public void registerInCourse(Course course) {

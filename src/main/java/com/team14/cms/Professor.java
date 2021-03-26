@@ -4,11 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Professor extends User {
-    List<Course> courses;
 
-    public Professor() {
-        courses = new ArrayList<>();
-    }
+    CourseDeliverableFactory cdFactor = new CourseDeliverableFactory();
 
     public Professor(Integer id, String fName, String lName, String password){
         this.id = id;
@@ -16,8 +13,6 @@ public class Professor extends User {
         this.lName = lName;
         this.password = password;
         this.isLoggedIn = false;
-
-        courses = new ArrayList<>();
     }
 
     public void createCourseDeliverable(Course course, String name, int dueDate) {
@@ -32,7 +27,7 @@ public class Professor extends User {
 
     }
 
-    public void submitFinalGrades() {
+    public void submitFinalGrades(Course course) {
 
     }
 
