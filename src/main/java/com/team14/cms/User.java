@@ -6,8 +6,9 @@ import java.util.List;
 public abstract class User implements Observer {
     public boolean isLoggedIn;
 
-    protected int id;
-    protected String fName, lName, password;
+    public int id;
+    public String fName, lName;
+    protected String password;
 
     protected List<Course> courses = new ArrayList<>();
 
@@ -44,13 +45,13 @@ public abstract class User implements Observer {
     }
 
     public void login() {
-        toggleLogin();
+        isLoggedIn = true;
     }
     public void logout() {
-        toggleLogin();
+        isLoggedIn = false;
     }
 
-    private void toggleLogin() {
+    /*private void toggleLogin() {
         isLoggedIn = !isLoggedIn;
-    }
+    }*/
 }

@@ -86,13 +86,24 @@
                     </tr>
                     </thead>
                     <tbody>
+                    <h1>Professor List</h1>
                     <tr th:each="professor:${professors}">
                         <td th:text="${professor.id}"></td>
-                        <td th:text="${professor.fname}"></td>
-                        <td th:text="${professor.lname}"></td>
+                        <td th:text="${professor.fName}"></td>
+                        <td th:text="${professor.lName}"></td>
+                        <td>
+                            <form th:action="@{/professor/delete/}+${professor.id}" method="post">
+                                <input name="_method" type="hidden" value="delete"/>
+                                <input value="DELETE" type="submit"/>
+                            </form>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
+                <br>
+                <form action="/professor/add" method="get">
+                    <input value="ADD A NEW PROFESSOR" type="submit"/>
+                </form>
             </div>
         </div>
     </div>

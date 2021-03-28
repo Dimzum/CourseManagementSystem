@@ -3,7 +3,7 @@ package com.team14.cms;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -18,23 +18,34 @@ public class AdminController {
     @Autowired
     ProfessorDao professorDao;
 
+    @GetMapping(value = "/admin/logout")
+    public String logout(){
+        Administration admin = adminDao.get(1001);
+
+        admin.logout();
+
+        return "loginAdmin";
+    }
+
     @GetMapping(value = "/admin/profile")
     public String profile(Model model){
         Administration admin = adminDao.get(1001);
 
-        model.addAttribute("id", admin.getId());
-        model.addAttribute("name", "Admin");
-        if (admin.isLoggedIn()){
-            return "admin/profile";
-        }else{
+        if (!admin.isLoggedIn()){
             return "loginAdmin";
         }
-
-
+        model.addAttribute("id", admin.getId());
+        model.addAttribute("name", "Admin");
+        return "admin/profile";
     }
 
     @GetMapping(value = "/admin/proflist")
     public String proflist(Model model){
+        Administration admin = adminDao.get(1001);
+
+        if (!admin.isLoggedIn()){
+            return "loginAdmin";
+        }
         Collection<Professor> professors = professorDao.getAll();
 
         model.addAttribute("professors", professors);
@@ -42,10 +53,49 @@ public class AdminController {
         return "admin/professors";
     }
 
+    @PostMapping (value = "/professor/delete/{id}")
+    public String delprof(@PathVariable("id") Integer id, Model model){
+        Administration admin = adminDao.get(1001);
+
+        if (!admin.isLoggedIn()){
+            return "loginAdmin";
+        }
+        if (professorDao.get(id) != null){
+            professorDao.delete(id);
+        }
+
+        Collection<Professor> professors = professorDao.getAll();
+        model.addAttribute("professors", professors);
+
+        return "admin/professors";
+    }
+
     @GetMapping(value = "/admin/stulist")
     public String stulist(Model model){
+        Administration admin = adminDao.get(1001);
+
+        if (!admin.isLoggedIn()){
+            return "loginAdmin";
+        }
         Collection<Student> students = studentDao.getAll();
 
+        model.addAttribute("students", students);
+
+        return "admin/students";
+    }
+
+    @PostMapping (value = "/student/delete/{id}")
+    public String delstu(@PathVariable("id") Integer id, Model model){
+        Administration admin = adminDao.get(1001);
+
+        if (!admin.isLoggedIn()){
+            return "loginAdmin";
+        }
+        if (studentDao.get(id) != null){
+            studentDao.delete(id);
+        }
+
+        Collection<Student> students = studentDao.getAll();
         model.addAttribute("students", students);
 
         return "admin/students";

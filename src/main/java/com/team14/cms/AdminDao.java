@@ -18,9 +18,9 @@ public class AdminDao {
 
     private static Integer nextId = 1002;
 
-    public void add (Administration prof){
-        prof.setId(nextId);
-        admins.put(nextId++, prof);
+    public void add (Administration admin){
+        admin.setId(nextId);
+        admins.put(nextId++, admin);
     }
 
     public Collection<Administration> getAll(){
