@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Late Request List</title>
+    <title>Add a Professor</title>
     <style type="text/css">
         body{
             background: #FFF ;
@@ -76,7 +76,33 @@
             </h1>
         </div>
         <div class="maincontent">
-            <h1>late request</h1>
+            <h1>Add a Professor</h1>
+            <br>
+            <b>Enter the information of a professor</b>
+            <br>
+            <br>
+            <div class="signup"  align="left">
+                <form th:action="@{/professor/save/}+${id}" method="post">
+                    <div class="signup_line">
+                        <div>Employee Number: </div>
+                        <div name="id" th:text="${id}"></div>
+                    </div>
+                    <br>
+                    <div class="signup_line">
+                        <div>First Name: </div>
+                        <input type="text" name="fName"/>
+                    </div>
+                    <br>
+                    <div class="signup_line">
+                        <div>Last Name: </div>
+                        <input type="text" name="lName"/>
+                    </div>
+                    <br>
+
+                    <input value="SUBMIT" type="submit"/>
+                </form>
+
+            </div>
         </div>
     </div>
 </div>

@@ -20,8 +20,20 @@ public class ProfessorDao {
     private static Integer nextId = 1003;
 
     public void add (Professor prof){
-        prof.setId(nextId);
-        professors.put(nextId++, prof);
+        if (prof.getId() == 0){
+            prof.setId(nextId);
+            professors.put(nextId++, prof);
+        }else{
+            professors.put(prof.getId(), prof);
+        }
+    }
+
+    public Integer getNextId(){
+        return nextId;
+    }
+
+    public Integer useNextId(){
+        return nextId++;
     }
 
     public Collection<Professor> getAll(){

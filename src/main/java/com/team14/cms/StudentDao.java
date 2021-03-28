@@ -22,8 +22,20 @@ public class StudentDao {
     private static Integer nextId = 1005;
 
     public void add (Student stu){
-        stu.setId(nextId);
-        students.put(nextId++, stu);
+        if (stu.getId() == 0){
+            stu.setId(nextId);
+            students.put(nextId++, stu);
+        }else{
+            students.put(stu.getId(), stu);
+        }
+    }
+
+    public Integer getNextId(){
+        return nextId;
+    }
+
+    public Integer useNextId(){
+        return nextId++;
     }
 
     public Collection<Student> getAll(){

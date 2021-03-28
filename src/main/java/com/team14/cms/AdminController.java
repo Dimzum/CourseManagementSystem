@@ -70,6 +70,43 @@ public class AdminController {
         return "admin/professors";
     }
 
+    @GetMapping(value = "/professor/add")
+    public String goToAddPage(Model model){
+        Administration admin = adminDao.get(1001);
+
+        if (!admin.isLoggedIn()){
+            return "loginAdmin";
+        }
+
+        Integer id = professorDao.getNextId();
+
+        model.addAttribute("id", id);
+        return "admin/addProfForm";
+    }
+
+    @PostMapping(value = "/professor/save/{id}")
+    public String save(@PathVariable("id") Integer id, @RequestParam("fName") String fName, @RequestParam("lName") String lName, Model model){
+        Administration admin = adminDao.get(1001);
+
+        if (!admin.isLoggedIn()){
+            return "loginAdmin";
+        }
+
+        Professor professor = new Professor(id, fName, lName, "123456");
+
+        if (professor.getId() == professorDao.getNextId()){
+            professor.setId(professorDao.useNextId());
+            professorDao.add(professor);
+        }else{
+            professorDao.add(professor);
+        }
+
+        Collection<Professor> professors = professorDao.getAll();
+        model.addAttribute("professors", professors);
+
+        return "admin/professors";
+    }
+
     @GetMapping(value = "/admin/stulist")
     public String stulist(Model model){
         Administration admin = adminDao.get(1001);
