@@ -4,9 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Student extends User {
+    public enum YearStanding { One, Two, Three, Four }
+
+    public int yearStanding;
     public String birthday;
 
-    private List<Course> coursesTaken = new ArrayList<>();
+    public List<Course> coursesTaken = new ArrayList<>();
+
+    public boolean isOnDeansList = false;
 
     public Student(int id, String fName, String lName, String password, String birthday) {
         this.id = id;
@@ -28,6 +33,11 @@ public class Student extends User {
 
     public void submitCourseDeliverable(CourseDeliverable courseDeliverable) {
 
+    }
+
+    public float getAvg() {
+
+        return 0;
     }
 
     @Override

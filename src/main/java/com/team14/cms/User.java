@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class User implements Observer {
+    public enum Sex { Male, Female }
+
     public boolean isLoggedIn;
 
     public int id;
     public String fName, lName;
     protected String password;
+
+    public Sex sex;
 
     protected List<Course> courses = new ArrayList<>();
 
