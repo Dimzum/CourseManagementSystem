@@ -17,6 +17,8 @@ public class AdminController {
 
     @Autowired
     ProfessorDao professorDao;
+	@Autowired
+    CourseDao courseDao;
 
     @GetMapping(value = "/admin/logout")
     public String logout(){
@@ -139,9 +141,49 @@ public class AdminController {
     }
 
     @GetMapping(value = "/admin/courselist")
-    public String courselist(){
+    public String courselist(Model model) {
+        Collection<Course> courses = courseDao.getAll();
+        model.addAttribute("courses", courses);
         return "admin/courses";
     }
+
+    @PostMapping(value = "/course/delete/{id}")
+    public String delCourse(@PathVariable("id") Integer id, Model model) {
+
+        if (courseDao.get(id) != null) {
+            courseDao.delete(id);
+        }
+        Collection<Course> courses = courseDao.getAll();
+        model.addAttribute("courses", courses);
+        return "admin/courses";
+    }
+
+    @GetMapping(value = "/course/add")
+    public String goToAddCoursePage(Model model) {
+
+        Integer id = courseDao.getNextId();
+        model.addAttribute("id", id);
+        return "admin/addCourseForm";
+    }
+
+    @PostMapping(value = "/course/save/{id}")
+    public String saveCourse(@PathVariable("id") Integer id, @RequestParam("name") String name, @RequestParam("crn") String crn, Model model) {
+
+
+        Course course = new Course(name, crn, false);
+
+        if (course.getId() == courseDao.getNextId()) {
+            course.setId(courseDao.useNextId());
+            courseDao.add(course);
+        } else {
+            courseDao.add(course);
+        }
+
+        Collection<Course> courses = courseDao.getAll();
+        model.addAttribute("courses", courses);
+        return "admin/courses";
+    }
+
 
     @GetMapping(value = "/admin/intimereq")
     public String intimereq(){
