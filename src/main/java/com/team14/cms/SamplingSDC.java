@@ -66,7 +66,7 @@ class YearStandingXSampling implements SamplingSDC {
 
 // Returns every male student
 class SexSampling implements SamplingSDC {
-    public User.Sex sex;
+    User.Sex sex;
 
     public SexSampling(User.Sex sex) {
         this.sex = sex;
@@ -121,8 +121,9 @@ class CompositeSampling implements SamplingSDC {
 
     @Override
     public List<Student> getSample(List<Student> students) {
-        List<Student> sample = new ArrayList<>();
-
-        return sample;
+        for (SamplingSDC strategy : strategies) {
+            students = strategy.getSample(students);
+        }
+        return students;
     }
 }
