@@ -6,8 +6,17 @@ import java.util.List;
 import java.util.Map;
 
 public class Course extends Subject {
-    String name;
-    String crn;
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer id;
+    public String name;
+    public String crn;
     float creditValue;
     List<Course> prerequisites;
 
@@ -25,7 +34,12 @@ public class Course extends Subject {
         waitlist = new ArrayList<>();
         courseDeliverables = new HashMap<>();
     }
-
+    public Course(String name,String crn,boolean isOpen)
+    {
+        this.name=name;
+        this.crn=crn;
+        this.isOpen=isOpen;
+    }
     public Course(String name, String crn, float creditValue, List<Course> prerequisites, boolean isOpen) {
         this.name = name;
         this.crn = crn;
