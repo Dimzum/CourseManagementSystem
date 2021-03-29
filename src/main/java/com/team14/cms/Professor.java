@@ -35,4 +35,8 @@ public class Professor extends User {
     public void update() {
 
     }
+	@Override
+	public void accept(UserVisitor v) {
+        v.visit(this);
+    }
 }
