@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Professor Profile</title>
+    <style type="text/css">
+        body{
+            background: #FFF ;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .container{
+            background: #FFF;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .header{
+            padding: 10px 0;
+            background: #eee;
+        }
+
+        .sidebar{
+            float: left;
+            width: 200px;
+            background: #FFF;
+        }
+
+        .maincontent{
+            width: 570px;
+            background: #FFF;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <form th:action="@{/professor/logout/}+${professor.id}" method="get">
+            <input value="Log out" type="submit"/>
+        </form>
+    </div>
+
+    <div class="content">
+        <div class="sidebar">
+            <h1>
+                <form th:action="@{/professor/profile/}+${professor.id}" method="get">
+                    <input value="Profile" type="submit"/>
+                </form>
+            </h1>
+        </div>
+        <div class="maincontent">
+            <div>Empolyee Number: </div>
+            <div th:text="${professor.id}"></div>
+            <br>
+            <div>Name: </div>
+            <div th:text="${professor.fName}+' '+${professor.lName}"></div>
+            <br>
+        </div>
+    </div>
+</div>
+</body>
+</html>

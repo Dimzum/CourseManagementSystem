@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Student Main Page</title>
+    <style type="text/css">
+        body{
+            background: #FFF ;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .container{
+            background: #FFF;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .header{
+            padding: 10px 0;
+            background: #eee;
+        }
+
+        .sidebar{
+            float: left;
+            width: 200px;
+            background: #FFF;
+        }
+
+        .maincontent{
+            width: 570px;
+            background: #FFF;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <form th:action="@{/student/logout/}+${id}" method="get">
+            <input value="Log out" type="submit"/>
+        </form>
+    </div>
+
+    <div class="content">
+        <div class="sidebar">
+            <h1>
+                <form th:action="@{/student/profile/}+${id}" method="get">
+                    <input value="Profile" type="submit"/>
+                </form>
+            </h1>
+            <h1>
+                <form th:action="@{/student/courselist/}+${id}" method="get">
+                    <input value="My Course" type="submit"/>
+                </form>
+            </h1>
+            <h1>
+                <form th:action="@{/student/coursesearch/}+${id}" method="get">
+                    <input value="Search a Course" type="submit"/>
+                </form>
+            </h1>
+        </div>
+        <div class="maincontent">
+            <h1>Main Page for Student</h1>
+        </div>
+    </div>
+</div>
+</body>
+</html>

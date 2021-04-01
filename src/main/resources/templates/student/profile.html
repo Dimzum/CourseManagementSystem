@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Student Profile</title>
+    <style type="text/css">
+        body{
+            background: #FFF ;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .container{
+            background: #FFF;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .header{
+            padding: 10px 0;
+            background: #eee;
+        }
+
+        .sidebar{
+            float: left;
+            width: 200px;
+            background: #FFF;
+        }
+
+        .maincontent{
+            width: 570px;
+            background: #FFF;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <form th:action="@{/student/logout/}+${student.id}" method="get">
+            <input value="Log out" type="submit"/>
+        </form>
+    </div>
+
+    <div class="content">
+        <div class="sidebar">
+            <h1>
+                <form th:action="@{/student/profile/}+${student.id}" method="get">
+                    <input value="Profile" type="submit"/>
+                </form>
+            </h1>
+            <h1>
+                <form th:action="@{/student/courselist/}+${student.id}" method="get">
+                    <input value="My Course" type="submit"/>
+                </form>
+            </h1>
+            <h1>
+                <form th:action="@{/student/coursesearch/}+${student.id}" method="get">
+                    <input value="Search a Course" type="submit"/>
+                </form>
+            </h1>
+        </div>
+        <div class="maincontent">
+            <div>Student Number: </div>
+            <div th:text="${student.id}"></div>
+            <br>
+            <div>Name: </div>
+            <div th:text="${student.fName}+' '+${student.lName}"></div>
+            <br>
+            <div>Birthday: </div>
+            <div th:text="${student.birthday}"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
