@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>In-time request List</title>
+    <title>Add a Student</title>
     <style type="text/css">
         body{
             background: #FFF ;
@@ -76,7 +76,49 @@
             </h1>
         </div>
         <div class="maincontent">
-            <h1>in-time request</h1>
+            <h1>Add a Student</h1>
+            <br>
+            <b>Information of the Student</b>
+            <br>
+            <br>
+            <div class="signup"  align="center">
+                <form th:action="@{/student/save/}+${id}" method="post">
+                    <div class="signup_line">
+                        <div>Student Number: </div>
+                        <div name="id" th:text="${id}"></div>
+                    </div>
+                    <br>
+                    <div class="signup_line">
+                        <div>First Name: </div>
+                        <input name="fName" th:value="${req.fName}"></input>
+                    </div>
+                    <br>
+                    <div class="signup_line">
+                        <div>Last Name: </div>
+                        <input name="lName" th:value="${req.lName}"></input>
+                    </div>
+                    <br>
+                    <div class="signup_line">
+                        <div>Birthday: (YYYY/MM/DD)</div>
+                        <input name="birthday" th:value="${req.birthday}"></input>
+                    </div>
+                    <br>
+                    <div class="signup_line">
+                        <div>Request Number: </div>
+                        <input name="reqid" th:value="${req.id}"></input>
+                    </div>
+                    <br>
+                    <input value="SUBMIT" type="submit"/>
+
+                </form>
+                <br>
+                <form th:action="@{/request/reject/}+${req.id}" method="post">
+
+                    <input value="REJECT" type="submit"/>
+                </form>
+
+
+            </div>
         </div>
     </div>
 </div>

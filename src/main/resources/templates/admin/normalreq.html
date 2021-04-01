@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Course List</title>
+    <title>In-time request List</title>
     <style type="text/css">
         body{
             background: #FFF ;
@@ -76,25 +76,29 @@
             </h1>
         </div>
         <div class="maincontent">
-            <h1>courses</h1>
             <div class="table-responsive">
-                <table class="table-students">
-                    <thead>
-                    <tr>
-                        <th>Crn</th>
-                        <th>Course Name</th>
-                        <th>Credit</th>
-                    </tr>
-                    </thead>
+                <table class="table-requests">
+
                     <tbody>
-                    <h1>Course List</h1>
-                    <tr th:each="course:${courses}">
-                        <td th:text="${course.id}"></td>
-                        <td th:text="${course.name}"></td>
-                        <td th:text="${course.creditValue}"></td>
+                    <h1>Request List</h1>
+                    <tr th:each="request:${requests}">
+                        <td th:if = "${request.type} eq 'stusignup'">
+                            Request For Student Creation
+                        </td>
+                        <td th:if = "${request.type} eq 'profsignup'">
+                            Request For Professor Creation
+                        </td>
+                        <td th:if = "${!request.handled}">
+                            <form th:action="@{/request/handle/}+${request.id}" method="get">
+                                <hidden th:value="${request.id}" name="id"></hidden>
+                                <input value="PROCESS" type="submit"/>
+                            </form>
+                        </td>
+                        <td th:if = "${request.handled}" >
+                            (Handled)
+                        </td>
                         <td>
-                            <form th:action="@{/course/delete/}+${course.id}" method="post">
-                                <input name="_method" type="hidden" value="delete"/>
+                            <form th:action="@{/request/delete/}+${request.id}" method="post">
                                 <input value="DELETE" type="submit"/>
                             </form>
                         </td>
@@ -102,9 +106,6 @@
                     </tbody>
                 </table>
                 <br>
-                <form action="/course/add" method="get">
-                    <input value="ADD A NEW COURSE" type="submit"/>
-                </form>
             </div>
         </div>
     </div>

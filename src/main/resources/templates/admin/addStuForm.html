@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Course List</title>
+    <title>Add a Student</title>
     <style type="text/css">
         body{
             background: #FFF ;
@@ -76,35 +76,37 @@
             </h1>
         </div>
         <div class="maincontent">
-            <h1>courses</h1>
-            <div class="table-responsive">
-                <table class="table-students">
-                    <thead>
-                    <tr>
-                        <th>Crn</th>
-                        <th>Course Name</th>
-                        <th>Credit</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <h1>Course List</h1>
-                    <tr th:each="course:${courses}">
-                        <td th:text="${course.id}"></td>
-                        <td th:text="${course.name}"></td>
-                        <td th:text="${course.creditValue}"></td>
-                        <td>
-                            <form th:action="@{/course/delete/}+${course.id}" method="post">
-                                <input name="_method" type="hidden" value="delete"/>
-                                <input value="DELETE" type="submit"/>
-                            </form>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <br>
-                <form action="/course/add" method="get">
-                    <input value="ADD A NEW COURSE" type="submit"/>
+            <h1>Add a Student</h1>
+            <br>
+            <b>Enter the information of a student</b>
+            <br>
+            <br>
+            <div class="signup"  align="left">
+                <form th:action="@{/student/save/}+${id}" method="post">
+                    <div class="signup_line">
+                        <div>Student Number: </div>
+                        <div name="id" th:text="${id}"></div>
+                    </div>
+                    <br>
+                    <div class="signup_line">
+                        <div>First Name: </div>
+                        <input type="text" name="fName"/>
+                    </div>
+                    <br>
+                    <div class="signup_line">
+                        <div>Last Name: </div>
+                        <input type="text" name="lName"/>
+                    </div>
+                    <br>
+                    <div class="signup_line">
+                        <div>Birthday: (YYYY/MM/DD)</div>
+                        <input type="text" name="birthday"/>
+                    </div>
+                    <br>
+
+                    <input value="SUBMIT" type="submit"/>
                 </form>
+
             </div>
         </div>
     </div>

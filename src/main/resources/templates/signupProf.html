@@ -1,0 +1,55 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Sign Up Webpage</title>
+
+    <style type="text/css">
+        body{
+            background: #FFF ;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .header{
+            padding: 10px 0;
+            background: #eee;
+        }
+    </style>
+
+    <link href="css/index.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div class="header">
+    <form action="/index" method="get">
+        <input value="Index Page" type="submit"/>
+    </form>
+</div>
+<div align="center">
+    <br><br><br><br>
+    <h2>Sign up Professor</h2>
+    <div id="center">
+        <div class="signup"  align="Left">
+            <form action="/professor/signup" method="post">
+                <div class="signup_line">
+                    <div>First Name: </div>
+                    <input type="text" name="fName"/>
+                </div>
+                <br>
+                <div class="signup_line">
+                    <div >Last Name: </div>
+                    <input type="text" name="lName"/>
+                </div>
+                <br>
+
+                <input value="SEND THE SIGN UP FORM" type="submit"/>
+            </form>
+
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

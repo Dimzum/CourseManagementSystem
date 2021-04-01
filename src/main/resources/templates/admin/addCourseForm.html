@@ -84,7 +84,7 @@
             <div class="signup"  align="left">
                 <form th:action="@{/course/save/}+${id}" method="post">
                     <div class="signup_line">
-                        <div>Course ID: </div>
+                        <div>Course Reference Number: </div>
                         <div name="id" th:text="${id}"></div>
                     </div>
                     <br>
@@ -94,8 +94,8 @@
                     </div>
                     <br>
                     <div class="signup_line">
-                        <div>Course Crn: </div>
-                        <input type="text" name="crn"/>
+                        <div>Course Credit: </div>
+                        <input type="text" name="credit"/>
                     </div>
                     <br>
 

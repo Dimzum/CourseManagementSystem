@@ -12,16 +12,15 @@ public class CourseDao {
 
     static {
         courseMap = new HashMap<Integer, Course>();
-        Course course=new Course("WEB","10001",false);
-        course.setId(1001);
-        courseMap.put(1001,course );
+        courseMap.put(10001, new Course("COMP1405",10001, 0.5, null,false) );
+        courseMap.put(10002, new Course("COMP1406",10002, 0.5, null,false) );
     }
 
     public static Integer getNextId() {
         return nextId;
     }
 
-    private static Integer nextId = 1002;
+    private static Integer nextId = 10003;
 
     public void add (Course course){
         course.setId(nextId);

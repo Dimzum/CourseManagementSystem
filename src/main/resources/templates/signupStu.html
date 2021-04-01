@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Log in Webpage</title>
+    <title>Sign Up Webpage</title>
 
     <style type="text/css">
         body{
@@ -28,35 +28,30 @@
 </div>
 <div align="center">
     <br><br><br><br>
-    <h2>Log in Professor</h2>
+    <h2>Sign up Student</h2>
     <div id="center">
-        <div class="login"  align="center">
-            <form action="/professor/login" method="post">
-                <div class="login_line">
-                    <div>Username: </div>
-                    <input type="text" name="username"/>
+        <div class="signup"  align="Left">
+            <form action="/student/signup" method="post">
+                <div class="signup_line">
+                    <div>First Name: </div>
+                    <input type="text" name="fName"/>
                 </div>
                 <br>
+                <div class="signup_line">
+                    <div >Last Name: </div>
+                    <input type="text" name="lName"/>
+                </div>
                 <br>
-                <div class="login_line">
-                    <div>Password: </div>
-                    <input type="password" name="password"/>
+                <div class="signup_line">
+                    <div >Birthday: (YYYY/MM/DD)</div>
+                    <input type="text" name="birthday"/>
                 </div>
                 <br>
                 <br>
 
-                <input value="LOGIN" type="submit"/>
+                <input value="SEND THE SIGN UP FORM" type="submit"/>
             </form>
 
-        </div>
-        <br>
-        <br>
-        <div>OR</div>
-        <br>
-        <div class="signup" align="center">
-            <form action="/professor/signup" method="get">
-                <input value="SIGN UP" type="submit"/>
-            </form>
         </div>
 
     </div>

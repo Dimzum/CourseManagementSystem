@@ -17,8 +17,12 @@ public class AdminController {
 
     @Autowired
     ProfessorDao professorDao;
+
 	@Autowired
     CourseDao courseDao;
+
+	@Autowired
+    RequestDao requestDao;
 
     @GetMapping(value = "/admin/logout")
     public String logout(){
@@ -87,7 +91,7 @@ public class AdminController {
     }
 
     @PostMapping(value = "/professor/save/{id}")
-    public String save(@PathVariable("id") Integer id, @RequestParam("fName") String fName, @RequestParam("lName") String lName, Model model){
+    public String saveProf(@PathVariable("id") Integer id, @RequestParam(value = "reqid", required = false) Integer reqid, @RequestParam("fName") String fName, @RequestParam("lName") String lName,  Model model){
         Administration admin = adminDao.get(1001);
 
         if (!admin.isLoggedIn()){
@@ -101,6 +105,10 @@ public class AdminController {
             professorDao.add(professor);
         }else{
             professorDao.add(professor);
+        }
+        if (reqid != null){
+            Request req = requestDao.get(reqid);
+            req.handle();
         }
 
         Collection<Professor> professors = professorDao.getAll();
@@ -140,8 +148,41 @@ public class AdminController {
         return "admin/students";
     }
 
+    @PostMapping(value = "/student/save/{id}")
+    public String saveStu(@PathVariable("id") Integer id, @RequestParam("fName") String fName, @RequestParam("lName") String lName, @RequestParam("birthday") String birthday, @RequestParam(value = "reqid", required = false) Integer rid, Model model){
+        Administration admin = adminDao.get(1001);
+
+        if (!admin.isLoggedIn()){
+            return "loginAdmin";
+        }
+
+        Student student = new Student(id, fName, lName, "123456", birthday);
+
+        if (student.getId() == studentDao.getNextId()){
+            student.setId(studentDao.useNextId());
+            studentDao.add(student);
+        }else{
+            studentDao.add(student);
+        }
+
+        if (rid != null){
+            Request req = requestDao.get(rid);
+            req.handle();
+        }
+
+        Collection<Student> students = studentDao.getAll();
+        model.addAttribute("students", students);
+
+        return "admin/students";
+    }
+
     @GetMapping(value = "/admin/courselist")
     public String courselist(Model model) {
+        Administration admin = adminDao.get(1001);
+
+        if (!admin.isLoggedIn()){
+            return "loginAdmin";
+        }
         Collection<Course> courses = courseDao.getAll();
         model.addAttribute("courses", courses);
         return "admin/courses";
@@ -149,6 +190,11 @@ public class AdminController {
 
     @PostMapping(value = "/course/delete/{id}")
     public String delCourse(@PathVariable("id") Integer id, Model model) {
+        Administration admin = adminDao.get(1001);
+
+        if (!admin.isLoggedIn()){
+            return "loginAdmin";
+        }
 
         if (courseDao.get(id) != null) {
             courseDao.delete(id);
@@ -160,6 +206,11 @@ public class AdminController {
 
     @GetMapping(value = "/course/add")
     public String goToAddCoursePage(Model model) {
+        Administration admin = adminDao.get(1001);
+
+        if (!admin.isLoggedIn()){
+            return "loginAdmin";
+        }
 
         Integer id = courseDao.getNextId();
         model.addAttribute("id", id);
@@ -167,10 +218,14 @@ public class AdminController {
     }
 
     @PostMapping(value = "/course/save/{id}")
-    public String saveCourse(@PathVariable("id") Integer id, @RequestParam("name") String name, @RequestParam("crn") String crn, Model model) {
+    public String saveCourse(@PathVariable("id") Integer id, @RequestParam("name") String name, @RequestParam("credit") double credit, Model model) {
+        Administration admin = adminDao.get(1001);
 
+        if (!admin.isLoggedIn()){
+            return "loginAdmin";
+        }
 
-        Course course = new Course(name, crn, false);
+        Course course = new Course(name, id, credit, null, false);
 
         if (course.getId() == courseDao.getNextId()) {
             course.setId(courseDao.useNextId());
@@ -186,8 +241,80 @@ public class AdminController {
 
 
     @GetMapping(value = "/admin/intimereq")
-    public String intimereq(){
-        return "admin/intimereq";
+    public String intimereq(Model model){
+        Administration admin = adminDao.get(1001);
+
+        if (!admin.isLoggedIn()){
+            return "loginAdmin";
+        }
+        Collection<Request> requests = requestDao.getAll();
+        model.addAttribute("requests", requests);
+        return "admin/normalreq";
+    }
+
+    @PostMapping(value = "/request/delete/{id}")
+    public String intimereq(@PathVariable("id") Integer id, Model model){
+        Administration admin = adminDao.get(1001);
+
+        if (!admin.isLoggedIn()){
+            return "loginAdmin";
+        }
+
+        if (requestDao.get(id) != null){
+            requestDao.delete(id);
+        }
+        Collection<Request> requests = requestDao.getAll();
+        model.addAttribute("requests", requests);
+        return "admin/normalreq";
+    }
+
+    @GetMapping(value = "/request/handle/{id}")
+    public String handle(@PathVariable("id") Integer id, Model model){
+        Administration admin = adminDao.get(1001);
+
+        if (!admin.isLoggedIn()){
+            return "loginAdmin";
+        }
+        if (requestDao.get(id) == null){
+            return "admin/normalreq";
+        }
+
+        Request req = requestDao.get(id);
+
+        model.addAttribute("req", req);
+        if (req.type == "stusignup"){
+            Integer sid = studentDao.getNextId();
+            model.addAttribute("id", sid);
+            return "admin/addStu";
+        }else if(req.type == "profsignup"){
+            Integer pid = professorDao.getNextId();
+            model.addAttribute("id", pid);
+            return "admin/addProf";
+        }
+
+        Collection<Request> requests = requestDao.getAll();
+        model.addAttribute("requests", requests);
+        return "admin/normalreq";
+    }
+
+    @PostMapping(value = "/request/reject/{id}")
+    public String reject(@PathVariable("id") Integer id, Model model){
+        Administration admin = adminDao.get(1001);
+
+        if (!admin.isLoggedIn()){
+            return "loginAdmin";
+        }
+        if (requestDao.get(id) == null){
+            return "admin/normalreq";
+        }
+
+        Request req = requestDao.get(id);
+
+        req.handle();
+
+        Collection<Request> requests = requestDao.getAll();
+        model.addAttribute("requests", requests);
+        return "admin/normalreq";
     }
 
     @GetMapping(value = "/admin/latereq")
