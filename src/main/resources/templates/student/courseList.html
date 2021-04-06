@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Student Main Page</title>
+    <title>Student Course List</title>
     <style type="text/css">
         body{
             background: #FFF ;
@@ -50,7 +50,7 @@
                 </form>
             </h1>
             <h1>
-                <form th:action="@{/student/courseList/}+${id}" method="get">
+                <form th:action="@{/student/courselist/}+${id}" method="get">
                     <input value="My Course" type="submit"/>
                 </form>
             </h1>
@@ -61,7 +61,37 @@
             </h1>
         </div>
         <div class="maincontent">
-            <h1>Main Page for Student</h1>
+            <h1>courses</h1>
+            <div class="table-responsive">
+                <table class="table-students">
+                    <thead>
+                    <tr>
+                        <th>Crn</th>
+                        <th>Course Name</th>
+                        <th>Credit</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <h1>Course List</h1>
+                    <tr th:each="course:${courses}">
+                        <td th:text="${course.id}"></td>
+                        <td th:text="${course.name}"></td>
+                        <td th:text="${course.creditValue}"></td>
+                        <td>
+                            <form th:action="@{/student/deleteCourse}" method="get">
+                                <input value="DELETE" type="submit"/>
+                                <input type="hidden" name="courseId" th:value="${course.getId()}" />
+                                <input type="hidden" name="id" th:value="${id}" />
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <br>
+                <form th:action="@{/student/chooseCourse/}+${id}" method="get">
+                    <input value="ADD A NEW COURSE" type="submit"/>
+                </form>
+            </div>
         </div>
     </div>
 </div>
