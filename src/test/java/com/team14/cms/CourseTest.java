@@ -16,10 +16,10 @@ public class CourseTest {
     @Test
     @DisplayName("Testing if student is correctly added to course")
     public void testAddToCourse() {
-        Student student = new Student(101, "john", "jay", "password", "2020/01/02");
+        Student student = new Student(101, "john", "smith", "password", "2020/01/02");
         course.addToCourse(student);
 
-        assertEquals(student.getId(), course.getStudent(student.getId()).getId());
-        assertEquals(student.getPassword(), course.getStudent(student.getId()).getPassword());
+        assertEquals(101, course.getStudentByID(student.getId()).getId());
+        assertEquals("password", course.getStudentByID(student.getId()).getPassword());
     }
 }

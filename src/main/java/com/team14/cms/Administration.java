@@ -15,28 +15,37 @@ public class Administration extends User {
         this.isLoggedIn = false;
     }
 
-    public void createCourse(String name, String crn, float creditValue) {
-
+    public void createCourse(String name, Integer id, double creditValue, boolean isOpen) {
+        Course c = new Course(name, id, creditValue, isOpen);
+        courses.add(c);
     }
 
-    public void deleteCourse(Course course) {
-
+    public void deleteCourse(int id) {
+        if (!courses.isEmpty()) {
+            courses.removeIf(course -> (course.getId() == id));
+        }
     }
 
-    public void createProf() {
-
+    public void createProf(int id, String fName, String lName, String password) {
+        Professor p = new Professor(id, fName, lName, password);
+        professorList.add(p);
     }
 
-    public void deleteProf() {
-
+    public void deleteProf(int id) {
+        if (!professorList.isEmpty()) {
+            professorList.removeIf(professor -> (professor.getId() == id));
+        }
     }
 
-    public void createStudent() {
-
+    public void createStudent(int id, String fName, String lName, String password, String birthday) {
+        Student s = new Student(id, fName, lName, password, birthday);
+        studentList.add(s);
     }
 
-    public void deleteStudent() {
-
+    public void deleteStudent(int id) {
+        if (!studentList.isEmpty()) {
+            studentList.removeIf(student -> (student.getId() == id));
+        }
     }
 
     @Override

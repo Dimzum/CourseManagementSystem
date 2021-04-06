@@ -13,21 +13,20 @@ public class Course extends Subject {
     public double creditValue;
     List<Course> prerequisites;
 
-    private Professor prof;             // prof assigned to the course
-    private Map<Student, Float> classList;    // students registered in the course
+    public  Professor prof;             // prof assigned to the course
+    public Map<Student, Float> classList = new HashMap<>();    // students registered in the course
 
-    private boolean isOpen;            // open for registration
+    public boolean isOpen;            // open for registration
+    public List<Student> waitlist = new ArrayList<>();
+
+    public Map<CourseDeliverable, Map<Student, Float>> courseDeliverables = new HashMap<>();
+
     private final int maxWaitlist = 10;
-    private List<Student> waitlist;
-
-    private Map<CourseDeliverable, Map<Student, Float>> courseDeliverables;
 
     public Course() {
-        classList = new HashMap<>();
-        waitlist = new ArrayList<>();
-        courseDeliverables = new HashMap<>();
+
     }
-    public Course(String name,Integer id,boolean isOpen)
+    public Course(String name,Integer id, double creditValue, boolean isOpen)
     {
         this.name=name;
         this.id=id;
@@ -39,10 +38,6 @@ public class Course extends Subject {
         this.creditValue = creditValue;
         this.prerequisites = prerequisites;
         this.isOpen = isOpen;
-
-        classList = new HashMap<>();
-        waitlist = new ArrayList<>();
-        courseDeliverables = new HashMap<>();
     }
 
     public Integer getId() {
@@ -71,7 +66,7 @@ public class Course extends Subject {
         return new ArrayList<>(classList.keySet());
     }
 
-    public Student getStudent(int id) {
+    public Student getStudentByID(int id) {
         for (Student s : classList.keySet()) {
             if (s.getId() == id) {
                 return s;
