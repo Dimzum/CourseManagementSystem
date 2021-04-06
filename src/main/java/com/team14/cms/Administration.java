@@ -3,11 +3,11 @@ package com.team14.cms;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Administration extends User {
+public class Administration extends User implements UserPart {
     List<Student> studentList = new ArrayList<>();
     List<Professor> professorList = new ArrayList<>();
 
-    public Administration(Integer id, String fName, String lName, String password){
+    public Administration(Integer id, String fName, String lName, String password) {
         this.id = id;
         this.fName = fName;
         this.lName = lName;
@@ -52,9 +52,10 @@ public class Administration extends User {
     public void update() {
 
     }
-	@Override
+
+    @Override
     public void accept(UserPartVisitor v) {
         v.visit(this);
     }
 }
-}
+
