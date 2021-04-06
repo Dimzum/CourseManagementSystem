@@ -3,7 +3,7 @@ package com.team14.cms;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Professor extends User {
+public class Professor extends User implements UserPart {
 
     CourseDeliverableFactory cdFactor = new CourseDeliverableFactory();
 
@@ -35,8 +35,9 @@ public class Professor extends User {
     public void update() {
 
     }
-	//@Override
-	public void accept(UserVisitor v) {
+
+    @Override
+    public void accept(UserPartVisitor v) {
         v.visit(this);
     }
 }

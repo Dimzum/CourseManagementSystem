@@ -52,4 +52,9 @@ public class Administration extends User {
     public void update() {
 
     }
+	@Override
+    public void accept(UserPartVisitor v) {
+        v.visit(this);
+    }
+}
 }

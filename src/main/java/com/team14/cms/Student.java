@@ -3,7 +3,12 @@ package com.team14.cms;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Student extends User {
+public class Student extends User implements UserPart{
+    @Override
+    public void accept(UserPartVisitor v) {
+        v.visit(this);
+    }
+
     public enum YearStanding { One, Two, Three, Four }
 
     public int yearStanding;
@@ -43,9 +48,5 @@ public class Student extends User {
     @Override
     public void update() {
 
-    }
-	//@Override
-    public void accept(UserVisitor v) {
-        v.visit(this);
     }
 }

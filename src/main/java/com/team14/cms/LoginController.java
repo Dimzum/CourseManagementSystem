@@ -22,19 +22,13 @@ class LoginstuController extends LoginController {
     public String login(@RequestParam("username") String username,
                         @RequestParam("password") String password,
                         Model model){
-        Integer id = 0;
-        try{
-            id = Integer.valueOf(username);
-        }catch (NumberFormatException e){
-            e.printStackTrace();
-        }
-        if (studentDao.get(id) == null || id == 0){
+        if (studentDao.get(username) == null ){
             return "loginStu";
         }
-        Student student = studentDao.get(id);
+        Student student = studentDao.get(username);
         if (student.getPassword().equals(password)){
             student.login();
-            model.addAttribute("id", id);
+            model.addAttribute("id", student.getId());
             return "student/main";
         }else{
             //map.put("msg", "Username or Password is wrong.");
