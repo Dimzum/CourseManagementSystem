@@ -9,4 +9,4 @@ Comp3004-Team14
 
 To run:  
 run CmsAppplication  
-in browser -> http://localhost:8080/Hello
+in browser -> http://localhost:8080
