@@ -51,7 +51,7 @@ public class StudentController {
     {   model.addAttribute("courses",studentDao.get(id).courses);
         return "student/courseList";
     }
-    @GetMapping(value = "/student/chooseCourse/{id}")
+    @GetMapping(value = "/student/coursesearch/{id}")
     public String chooseCourse(@PathVariable("id") Integer stuId,Model model)
     {   model.addAttribute("id",stuId);
         model.addAttribute("courses",courseDao.getAll());
