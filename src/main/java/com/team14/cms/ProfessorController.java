@@ -49,15 +49,15 @@ public class ProfessorController {
         return "professor/profile";
     }
 
-    @GetMapping(value = "/professor/courselist/{id}")
-    public String courselist(Integer id, Model model) {
-        Professor prof = professorDao.get(id);
+    @GetMapping(value = "/professor/profCourses/{id}")
+    public String courselist(@PathVariable("id") Integer id, Model model) {
+        Professor professor = professorDao.get(id);
 
-        if (!prof.isLoggedIn()) {
+        if (!professor.isLoggedIn()) {
             return "loginProf";
         }
 
-        Collection<Course> courses = prof.courses;
+        Collection<Course> courses = professor.courses;
         model.addAttribute("courses", courses);
         return "professor/profCourses";
     }
