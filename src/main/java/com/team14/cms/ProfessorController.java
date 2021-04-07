@@ -62,6 +62,18 @@ public class ProfessorController {
         return "professor/profCourses";
     }
 
+    @GetMapping(value = "/professor/createCourseDeliverable/{id}")
+    public String createCourseDeliverable(@PathVariable("id") Integer id, Model model) {
+        Professor professor = professorDao.get(id);
+        
+        if (!professor.isLoggedIn()) {
+            return "loginProf";
+        }
+
+        model.addAttribute("professor", professor);
+        return "professor/createCourseDeliverable";
+    }
+
     @PostMapping(value = "/professor/createCourseDeliverable/{id}")
     public String createCourseDeliverable(@PathVariable("id") Integer id,
                                           @RequestParam("cid") Integer cid,
@@ -78,6 +90,18 @@ public class ProfessorController {
         professor.createCourseDeliverable(cid, type, name, deadline);
         model.addAttribute("professor", professor);
         return "professor/createCourseDeliverable";
+    }
+
+    @GetMapping(value = "/professor/deleteCourseDeliverable/{id}")
+    public String deleteCourseDeliverable(@PathVariable("id") Integer id, Model model) {
+        Professor professor = professorDao.get(id);
+
+        if (!professor.isLoggedIn()) {
+            return "loginProf";
+        }
+
+        model.addAttribute("professor", professor);
+        return "professor/deleteCourseDeliverable";
     }
 
     @PostMapping(value = "/professor/deleteCourseDeliverable/{id}")
