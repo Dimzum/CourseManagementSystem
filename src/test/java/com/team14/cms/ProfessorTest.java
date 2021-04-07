@@ -1,8 +1,9 @@
 package com.team14.cms;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,10 +21,11 @@ public class ProfessorTest {
 
         assertEquals(true, prof.courses.get(0).courseDeliverables.isEmpty());
 
-        CourseDeliverable cd = prof.cdFactor.createCourseDeliverable(CourseDeliverable.DeliverableType.Assignment, "Test1", "8/3/2010");
+        CourseDeliverable cd = prof.cdFactory.createCourseDeliverable(CourseDeliverable.DeliverableType.Assignment, "Test1", "8/3/2010");
         prof.courses.get(0).courseDeliverables.put(cd, null);
 
         assertEquals(false, prof.courses.get(0).courseDeliverables.isEmpty());
-        assertEquals(cd, prof.courses.get(0).courseDeliverables.keySet().toArray()[0]);
+        //assertEquals(cd, prof.courses.get(0).courseDeliverables.keySet().toArray()[0]);
+        assertThat("Same instance of cd", cd, equalTo(prof.courses.get(0).courseDeliverables.keySet().toArray()[0]));
     }
 }

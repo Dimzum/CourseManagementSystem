@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Create A Course Deliverable</title>
+    <style type="text/css">
+        body{
+            background: #FFF ;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .container{
+            background: #FFF;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .header{
+            padding: 10px 0;
+            background: #eee;
+        }
+
+        .sidebar{
+            float: left;
+            height: 400px;
+            width: 200px;
+            background: #FFF;
+        }
+
+        .maincontent{
+            width: 570px;
+            background: #FFF;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <form th:action="@{/professor/logout/}+${professor.id}" method="get">
+            <input value="Log out" type="submit"/>
+        </form>
+    </div>
+    <div class="content">
+        <div class="sidebar">
+            <h1>
+                <form th:action="@{/professor/main/}+${professor.id}" method="get">
+                    <input value="Home" type="submit"/>
+                </form>
+                <form th:action="@{/professor/profile/}+${professor.id}" method="get">
+                    <input value="Profile" type="submit"/>
+                </form>
+            </h1>
+        </div>
+        <div class="maincontent">
+            <H1>Create Course Deliverable</H1>
+            <br>
+            <div class="createCD" align="center">
+                <form th:action="@{/professor/createCourseDeliverable/}+${id}" method="post">
+                    <div class="cd_line">
+                        <div>Id of Course</div>
+                        <input name="cid" type="text">
+                    </div>
+                    <br>
+                    <div class="cd_line">
+                        <div>Course Deliverable Type</div>
+                        <input name="type" type="text">
+                    </div>
+                    <br>
+                    <div class="cd_line">
+                        <div>Course Deliverable Name</div>
+                        <input name="name" type="text">
+                    </div>
+                    <br>
+                    <div class="cd_line">
+                        <div>Course Deliverable Deadline</div>
+                        <input name="deadline" type="text">
+                    </div>
+                    <br>
+                    <input value="SUBMIT" type="submit">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Course List</title>
+    <style type="text/css">
+        body{
+            background: #FFF ;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .container{
+            background: #FFF;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .header{
+            padding: 10px 0;
+            background: #eee;
+        }
+
+        .sidebar{
+            float: left;
+            height: 200px;
+            width: 200px;
+            background: #FFF;
+        }
+
+        .maincontent{
+            width: 570px;
+            background: #FFF;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <form th:action="@{/professor/logout/}+${id}" method="get">
+            <input value="Logout" type="submit"/>
+        </form>
+    </div>
+    <div class="content">
+        <div class="sidebar">
+            <H1>
+            <form th:action="@{/professor/main/}+${id}" method="get">
+                <input value="Home" type="submit"/>
+            </form>
+            <form th:action="@{/professor/profile/}+${id}" method="get">
+                <input value="Profile" type="submit"/>
+            </form>
+            </H1>
+        </div>
+        <div class="maincontent">
+            <H1>Courses</H1>
+            <div class="table-responsive">
+                <table class="table-students">
+                    <thead>
+                    <tr>
+                        <th>Crn</th>
+                        <th>Course Name</th>
+                        <th>Credit</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <h1>Course List</h1>
+                    <tr th:each="course:${courses}">
+                        <td th:text="${course.id}"></td>
+                        <td th:text="${course.name}"></td>
+                        <td th:text="${course.creditValue}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br>
+            <div class="courseDeliverable">
+                <form th:action="@{/professor/createCourseDeliverable/}+${id}" method="get">
+                    <input value="Create Course Deliverable" type="submit">
+                </form>
+                <form th:action="@{/professor/deleteCourseDeliverable/}+${id}" method="get">
+                    <input value="Delete Course Deliverable" type="submit">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

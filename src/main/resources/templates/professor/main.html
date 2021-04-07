@@ -48,6 +48,9 @@
                 <form th:action="@{/professor/profile/}+${id}" method="get">
                     <input value="Profile" type="submit"/>
                 </form>
+                <form th:action="@{/professor/profCourses/}+${id}" method="get">
+                    <input value="Courses" type="submit"/>
+                </form>
             </h1>
         </div>
         <div class="maincontent">

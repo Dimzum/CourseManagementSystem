@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Professor extends User implements UserPart {
 
-    CourseDeliverableFactory cdFactor = new CourseDeliverableFactory();
+    CourseDeliverableFactory cdFactory = new CourseDeliverableFactory();
 
     public Professor(Integer id, String fName, String lName, String password){
         this.id = id;
@@ -15,12 +15,24 @@ public class Professor extends User implements UserPart {
         this.isLoggedIn = false;
     }
 
-    public void createCourseDeliverable(Course course, String name, int dueDate) {
-
+    public void createCourseDeliverable(Integer id, CourseDeliverable.DeliverableType type, String name, String dueDate) {
+        for (Course c : courses) {
+            if (c.getId() == id) {
+                c.courseDeliverables.put(cdFactory.createCourseDeliverable(type, name, dueDate), null);
+            }
+        }
     }
 
-    public void deleteCourseDeliverable(Course course, CourseDeliverable deliverable) {
-
+    public void deleteCourseDeliverable(Integer id, String name) {
+        for (Course c : courses) {
+            if (c.getId() == id) {
+                for (CourseDeliverable cd : c.courseDeliverables.keySet()) {
+                    if (cd.name.equalsIgnoreCase(name)) {
+                        c.courseDeliverables.remove(cd);
+                    }
+                }
+            }
+        }
     }
 
     public void submitIndividualGrade(Student student) {
