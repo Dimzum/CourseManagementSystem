@@ -207,6 +207,7 @@ public class AdminController {
     @GetMapping(value = "/course/add")
     public String goToAddCoursePage(Model model) {
         Administration admin = adminDao.get(1001);
+        Collection<Professor> professors = professorDao.getAll();
 
         if (!admin.isLoggedIn()){
             return "loginAdmin";
@@ -214,16 +215,22 @@ public class AdminController {
 
         Integer id = courseDao.getNextId();
         model.addAttribute("id", id);
+        model.addAttribute("profs", professors);
         return "admin/addCourseForm";
     }
 
     @PostMapping(value = "/course/save/{id}")
-    public String saveCourse(@PathVariable("id") Integer id, @RequestParam("name") String name, @RequestParam("credit") double credit, Model model) {
+    public String saveCourse(@PathVariable("id") Integer id, @RequestParam("name") String name, @RequestParam("credit") double credit, @RequestParam("pid") Integer pid, Model model) {
         Administration admin = adminDao.get(1001);
 
         if (!admin.isLoggedIn()){
             return "loginAdmin";
         }
+
+        if (professorDao.get(pid) == null){
+            return "admin/courses";
+        }
+        Professor professor = professorDao.get(pid);
 
         Course course = new Course(name, id, credit, null, false);
 
@@ -233,6 +240,9 @@ public class AdminController {
         } else {
             courseDao.add(course);
         }
+
+        course.setProf(professor);
+        professor.courses.add(course);
 
         Collection<Course> courses = courseDao.getAll();
         model.addAttribute("courses", courses);

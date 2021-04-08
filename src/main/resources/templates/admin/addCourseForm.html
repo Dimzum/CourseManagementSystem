@@ -98,6 +98,13 @@
                         <input type="text" name="credit"/>
                     </div>
                     <br>
+                    <div class="signup_line">
+                        <div>Professor: </div>
+                        <select class="form-control" name="pid">
+                            <option th:value="${prof.id}" th:each="prof:${profs}" th:text="${prof.fName}+' '+${prof.lName}"></option>
+                        </select>
+                    </div>
+                    <br>
 
                     <input value="SUBMIT" type="submit"/>
                 </form>
