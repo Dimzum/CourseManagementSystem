@@ -27,6 +27,9 @@ public class ProfessorController {
     @Autowired
     RequestDao requestDao;
 
+    @Autowired
+    CourseDeliverableDao courseDeliverableDao;
+
     @GetMapping(value = "/professor/logout/{id}")
     public String logout(@PathVariable("id") Integer id) {
         Professor professor = professorDao.get(id);
@@ -71,6 +74,10 @@ public class ProfessorController {
             return "loginProf";
         }
         if (courseDao.get(id) == null){
+            Collection<Course> courses = professor.courses;
+            model.addAttribute("id", pid);
+            model.addAttribute("courses", courses);
+
             return "professor/profCourses";
         }
 
@@ -79,10 +86,14 @@ public class ProfessorController {
         Collection<Course> courses = professor.courses;
 
         if (!courses.contains(course)){
+            model.addAttribute("id", pid);
+            model.addAttribute("courses", courses);
             return "professor/profCourses";
         }
         model.addAttribute("id", pid);
         model.addAttribute("course", course);
+        Collection<CourseDeliverable> cds = courseDeliverableDao.getAll();
+        model.addAttribute("cds", cds);
         return "professor/coursePage";
     }
 
@@ -111,9 +122,9 @@ public class ProfessorController {
         return "professor/createCourseDeliverable";
     }
 
-    @PostMapping(value = "/professor/createCourseDeliverable/{id}")
-    public String createCourseDeliverable(@PathVariable("id") Integer id,
-                                          @RequestParam("cid") Integer cid,
+    @PostMapping(value = "/professor/{id}/createCourseDeliverable/{cid}")
+    public String saveCourseDeliverable(@PathVariable("id") Integer id,
+                                          @PathVariable("cid") Integer cid,
                                           @RequestParam("type") CourseDeliverable.DeliverableType type,
                                           @RequestParam("name") String name,
                                           @RequestParam("deadline") String deadline,
@@ -123,10 +134,30 @@ public class ProfessorController {
         if (!professor.isLoggedIn()) {
             return "loginProf";
         }
+        Course course = courseDao.get(cid);
 
+        Collection<Course> courses = professor.courses;
+
+        if (course == null){
+            model.addAttribute("id", id);
+            model.addAttribute("courses", courses);
+            return "professor/profCourses";
+        }
+        model.addAttribute("id", id);
+        model.addAttribute("course", course);
         professor.createCourseDeliverable(cid, type, name, deadline);
-        model.addAttribute("professor", professor);
-        return "professor/createCourseDeliverable";
+
+        if (type == CourseDeliverable.DeliverableType.Assignment){
+            courseDeliverableDao.add(new Assignment(name, deadline));
+        }else if (type == CourseDeliverable.DeliverableType.Test){
+            courseDeliverableDao.add(new Test(name, deadline));
+        }else if (type == CourseDeliverable.DeliverableType.Exam){
+            courseDeliverableDao.add(new Exam(name, deadline));
+        }
+        courseDeliverableDao.get(id).setCid(course.id);
+        Collection<CourseDeliverable> cds = courseDeliverableDao.getAll();
+        model.addAttribute("cds", cds);
+        return "professor/coursePage";
     }
 
     @GetMapping(value = "/professor/deleteCourseDeliverable/{id}")

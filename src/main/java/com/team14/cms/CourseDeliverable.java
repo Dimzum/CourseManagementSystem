@@ -6,14 +6,27 @@ public abstract class CourseDeliverable {
         Test,
         Exam
     }
-
+    public Integer id;
     public String name;
     public String deadline;
-
-    protected int grade;
+    public Integer cid;
+    protected Integer grade;
 
     public CourseDeliverable() {
 
+    }
+
+    public Integer getId(){
+        return id;
+    }
+    public void setId(Integer id){
+        this.id = id;
+    }
+    public void setCid(Integer cid){
+        this.cid = cid;
+    }
+    public Integer getCid(){
+        return cid;
     }
 
     public int getGrade() {

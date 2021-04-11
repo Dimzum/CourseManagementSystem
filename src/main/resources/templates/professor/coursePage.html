@@ -55,6 +55,27 @@
         </div>
         <div class="maincontent">
             <H1 th:text="${course.name}"></H1>
+            <table class="table-cds">
+
+                <tbody>
+                <tr th:each="cd:${cds}">
+                    <div th:if="${cd.cid} eq ${course.id}">
+                        <td th:text="${cd.name}"></td>
+                        <td>
+                            <form th:action="@{/professor/}+${id}+@{/course/}+${course.id}+@{/deliverable/}+${cd.id}+@{/edit}" method="get">
+                                <input value="EDIT" type="submit"/>
+                            </form>
+                        </td>
+                        <td>
+                            <form th:action="@{/professor/}+${id}+@{/course/}+${course.id}+@{/deliverable/}+${cd.id}+@{/delete}" method="post">
+                                <input name="_method" type="hidden" value="delete"/>
+                                <input value="DELETE" type="submit"/>
+                            </form>
+                        </td>
+                    </div>
+                </tr>
+                </tbody>
+            </table>
             <form th:action="@{/professor/}+${id}+@{/createCourseDeliverable/}+${course.id}" method="get">
                 <input value="Create a Deliverable" type="submit"/>
             </form>
