@@ -15,6 +15,20 @@ public class ProfessorTest {
         prof = new Professor(1001, "prof", "prof", "pass");
     }
 
+    public void loginTest() {
+        assertEquals(false, prof.isLoggedIn);
+        prof.login();
+        assertEquals(true, prof.isLoggedIn);
+    }
+
+    public void logoutTest() {
+        assertEquals(false, prof.isLoggedIn);
+        prof.login();
+        assertEquals(true, prof.isLoggedIn);
+        prof.logout();
+        assertEquals(false, prof.isLoggedIn);
+    }
+
     @Test
     public void createCourseDeliverableTest() {
         prof.courses.add(new Course());

@@ -1,7 +1,9 @@
 package com.team14.cms;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Professor extends User implements UserPart {
 
@@ -35,12 +37,12 @@ public class Professor extends User implements UserPart {
         }
     }
 
-    public void submitIndividualGrade(Student student) {
-
+    public float submitIndividualGrade(Course course, Student student) {
+        return course.classList.get(student);
     }
 
-    public void submitFinalGrades(Course course) {
-
+    public Map<Student, Float> submitFinalGrades(Course course) {
+        return course.classList;
     }
 
     @Override

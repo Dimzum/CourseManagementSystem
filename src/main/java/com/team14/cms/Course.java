@@ -94,6 +94,17 @@ public class Course extends Subject {
         waitlist.add(student);
     }
 
+    public void removeStudent(Student student) {
+        if (!classList.isEmpty() || classList.containsKey(student)) {
+            classList.remove(student);
+            notifyObservers();
+        }
+    }
+
+    public void studentSubmitCD(CourseDeliverable deliverable, Student student) {
+        courseDeliverables.get(deliverable).put(student, null);
+    }
+
     @Override
     public void notifyObservers() {
         for (Observer o : observers) {

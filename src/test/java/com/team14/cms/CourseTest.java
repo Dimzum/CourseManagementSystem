@@ -15,7 +15,7 @@ public class CourseTest {
 
     @Test
     @DisplayName("Testing if student is correctly added to course")
-    public void testAddToCourse() {
+    public void addToCourseTest() {
         Student student = new Student(101, "john", "smith", "password", "2020/01/02");
         course.addToCourse(student);
 

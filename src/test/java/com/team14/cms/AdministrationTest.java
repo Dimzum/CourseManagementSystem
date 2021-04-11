@@ -13,8 +13,22 @@ public class AdministrationTest {
         admin = new Administration(1001, "admin", "admin", "pass");
     }
 
+    public void loginTest() {
+        assertEquals(false, admin.isLoggedIn);
+        admin.login();
+        assertEquals(true, admin.isLoggedIn);
+    }
+
+    public void logoutTest() {
+        assertEquals(false, admin.isLoggedIn);
+        admin.login();
+        assertEquals(true, admin.isLoggedIn);
+        admin.logout();
+        assertEquals(false, admin.isLoggedIn);
+    }
+
     @Test
-    public void CreateCourse() {
+    public void createCourseTest() {
         assertEquals(true, admin.courses.isEmpty());
 
         admin.createCourse("physics", 10021, 0.5f, true);
@@ -24,7 +38,7 @@ public class AdministrationTest {
     }
 
     @Test
-    public void DeleteCourse() {
+    public void deleteCourseTest() {
         admin.createCourse("calculus", 13201, 0.5f, true);
         assertEquals(false, admin.courses.isEmpty());
         admin.deleteCourse(13201);
@@ -32,7 +46,7 @@ public class AdministrationTest {
     }
 
     @Test
-    public void CreateProfessorTest() {
+    public void createProfessorTest() {
         assertEquals(true, admin.professorList.isEmpty());
 
         admin.createProf(1002, "p", "p", "p");
@@ -43,7 +57,7 @@ public class AdministrationTest {
     }
 
     @Test
-    public void DeleteProfessorTest() {
+    public void deleteProfessorTest() {
         admin.createProf(1002, "p", "p", "p");
         assertEquals(false, admin.professorList.isEmpty());
         admin.deleteProf(1002);
@@ -51,7 +65,17 @@ public class AdministrationTest {
     }
 
     @Test
-    public void CreateStudentTest() {
+    public void setProfForCourseTest() {
+        Professor p = new Professor(1003, "prof", "prof", "pass");
+        Course c = new Course();
+
+        assertEquals(null, c.getProf());
+        admin.setProfForCourse(c, p);
+        assertEquals(p.id, c.getProf().id);
+    }
+
+    @Test
+    public void createStudentTest() {
         assertEquals(true, admin.studentList.isEmpty());
 
         admin.createStudent(1003, "s", "s", "p", null);
@@ -62,10 +86,21 @@ public class AdministrationTest {
     }
 
     @Test
-    public void DeleteStudentTest() {
+    public void deleteStudentTest() {
         admin.createStudent(1003, "s", "s", "p", null);
         assertEquals(false, admin.studentList.isEmpty());
         admin.deleteStudent(1003);
         assertEquals(true, admin.studentList.isEmpty());
+    }
+
+    @Test
+    public void registerStudentInCourseTest() {
+        Student student = new Student(1004, null, null, null, null);
+        Course c = new Course();
+
+        assertEquals(false, c.classList.containsKey(student));
+        student.registerInCourse(c);
+        admin.registerStudentInCourse(c);
+        assertEquals(true, c.classList.containsKey(student));
     }
 }

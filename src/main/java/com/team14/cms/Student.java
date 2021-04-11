@@ -28,16 +28,18 @@ public class Student extends User implements UserPart{
         this.birthday = birthday;
     }
 
+    // Doesn't actually register student in course
+    // Only adds them to the waitlist until admin accepts the request
     public void registerInCourse(Course course) {
-
+        course.addToWaitlist(this);
     }
 
     public void dropCourse(Course course) {
-
+        course.removeStudent(this);
     }
 
-    public void submitCourseDeliverable(CourseDeliverable courseDeliverable) {
-
+    public void submitCourseDeliverable(Course course, CourseDeliverable courseDeliverable) {
+        course.studentSubmitCD(courseDeliverable, this);
     }
 
     public float getAvg() {

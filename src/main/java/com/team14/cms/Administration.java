@@ -37,6 +37,10 @@ public class Administration extends User implements UserPart {
         }
     }
 
+    public void setProfForCourse(Course course, Professor professor) {
+        course.setProf(professor);
+    }
+
     public void createStudent(int id, String fName, String lName, String password, String birthday) {
         Student s = new Student(id, fName, lName, password, birthday);
         studentList.add(s);
@@ -46,6 +50,10 @@ public class Administration extends User implements UserPart {
         if (!studentList.isEmpty()) {
             studentList.removeIf(student -> (student.getId() == id));
         }
+    }
+
+    public void registerStudentInCourse(Course course) {
+        course.addToCourse(course.waitlist.remove(0));
     }
 
     @Override
