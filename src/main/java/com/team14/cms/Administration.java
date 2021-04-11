@@ -53,7 +53,7 @@ public class Administration extends User implements UserPart {
     }
 
     public void registerStudentInCourse(Course course) {
-        course.addToCourse(course.waitlist.remove(0));
+        //course.addToCourse(course.waitlist.remove(0));
     }
 
     @Override

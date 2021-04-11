@@ -31,7 +31,8 @@ public class Student extends User implements UserPart{
     // Doesn't actually register student in course
     // Only adds them to the waitlist until admin accepts the request
     public void registerInCourse(Course course) {
-        course.addToWaitlist(this);
+        //course.addToWaitlist(this);
+        course.addToCourse(this);
     }
 
     public void dropCourse(Course course) {
