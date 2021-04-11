@@ -95,7 +95,11 @@
                     <br>
                     <div class="signup_line">
                         <div>Course Credit: </div>
-                        <input type="text" name="credit"/>
+                        <select class="form-control" name="credit">
+                            <option value="0.0" th:text="@{0.0}"></option>
+                            <option value="0.5" th:text="@{0.5}"></option>
+                            <option value="1.0" th:text="@{1.0}"></option>
+                        </select>
                     </div>
                     <br>
                     <div class="signup_line">

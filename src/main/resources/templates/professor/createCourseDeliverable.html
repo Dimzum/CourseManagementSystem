@@ -38,18 +38,18 @@
 <body>
 <div class="container">
     <div class="header">
-        <form th:action="@{/professor/logout/}+${professor.id}" method="get">
+        <form th:action="@{/professor/logout/}+${id}" method="get">
             <input value="Log out" type="submit"/>
         </form>
     </div>
     <div class="content">
         <div class="sidebar">
             <h1>
-                <form th:action="@{/professor/main/}+${professor.id}" method="get">
-                    <input value="Home" type="submit"/>
-                </form>
-                <form th:action="@{/professor/profile/}+${professor.id}" method="get">
+                <form th:action="@{/professor/profile/}+${id}" method="get">
                     <input value="Profile" type="submit"/>
+                </form>
+                <form th:action="@{/professor/profCourses/}+${id}" method="get">
+                    <input value="Courses" type="submit"/>
                 </form>
             </h1>
         </div>
@@ -57,24 +57,28 @@
             <H1>Create Course Deliverable</H1>
             <br>
             <div class="createCD" align="center">
-                <form th:action="@{/professor/createCourseDeliverable/}+${id}" method="post">
+                <form th:action="@{/professor/}+${id}+@{/createCourseDeliverable/}+${course.id}" method="post">
                     <div class="cd_line">
-                        <div>Id of Course</div>
-                        <input name="cid" type="text">
+                        <div>Course: </div>
+                        <div th:text="${course.name}+' ('+${course.id}+')'"></div>
                     </div>
                     <br>
                     <div class="cd_line">
-                        <div>Course Deliverable Type</div>
-                        <input name="type" type="text">
+                        <div>Course Deliverable Type: </div>
+                        <select class="form-control" name="type">
+                            <option value="Assignment" th:text="@{Assignment}"></option>
+                            <option value="Test" th:text="@{Test}"></option>
+                            <option value="Exam" th:text="@{Exam}"></option>
+                        </select>
                     </div>
                     <br>
                     <div class="cd_line">
-                        <div>Course Deliverable Name</div>
+                        <div>Course Deliverable Name: </div>
                         <input name="name" type="text">
                     </div>
                     <br>
                     <div class="cd_line">
-                        <div>Course Deliverable Deadline</div>
+                        <div>Course Deliverable Deadline: </div>
                         <input name="deadline" type="text">
                     </div>
                     <br>

@@ -58,19 +58,56 @@ public class ProfessorController {
         }
 
         Collection<Course> courses = professor.courses;
+        model.addAttribute("id", id);
         model.addAttribute("courses", courses);
         return "professor/profCourses";
     }
 
-    @GetMapping(value = "/professor/createCourseDeliverable/{id}")
-    public String createCourseDeliverable(@PathVariable("id") Integer id, Model model) {
-        Professor professor = professorDao.get(id);
-        
+    @GetMapping(value = "/professor/{pid}/coursePage/{id}")
+    public String courselist(@PathVariable("pid") Integer pid, @PathVariable("id") Integer id, Model model) {
+        Professor professor = professorDao.get(pid);
+
         if (!professor.isLoggedIn()) {
             return "loginProf";
         }
+        if (courseDao.get(id) == null){
+            return "professor/profCourses";
+        }
 
-        model.addAttribute("professor", professor);
+        Course course = courseDao.get(id);
+
+        Collection<Course> courses = professor.courses;
+
+        if (!courses.contains(course)){
+            return "professor/profCourses";
+        }
+        model.addAttribute("id", pid);
+        model.addAttribute("course", course);
+        return "professor/coursePage";
+    }
+
+    @GetMapping(value = "/professor/{pid}/createCourseDeliverable/{id}")
+    public String createCourseDeliverable(@PathVariable("pid") Integer pid, @PathVariable("id") Integer id, Model model) {
+        Professor professor = professorDao.get(pid);
+
+        if (!professor.isLoggedIn()) {
+            return "loginProf";
+        }
+        model.addAttribute("id", pid);
+        if (courseDao.get(id) == null){
+            return "professor/profCourses";
+        }
+
+        Course course = courseDao.get(id);
+
+        Collection<Course> courses = professor.courses;
+
+        if (!courses.contains(course)){
+            return "professor/profCourses";
+        }
+
+
+        model.addAttribute("course", course);
         return "professor/createCourseDeliverable";
     }
 

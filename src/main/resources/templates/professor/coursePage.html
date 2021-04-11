@@ -54,17 +54,10 @@
             </h1>
         </div>
         <div class="maincontent">
-            <H1>Courses</H1>
-            <div class="table-responsive">
-                <table class="table-courses">
-                    <tbody>
-                    <tr th:each="course:${courses}">
-                        <a th:href="@{/professor/}+${id}+@{/coursePage/}+${course.id}" th:text="${course.name}"></a>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <br>
+            <H1 th:text="${course.name}"></H1>
+            <form th:action="@{/professor/}+${id}+@{/createCourseDeliverable/}+${course.id}" method="get">
+                <input value="Create a Deliverable" type="submit"/>
+            </form>
         </div>
     </div>
 </div>
