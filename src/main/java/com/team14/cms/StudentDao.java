@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Repository
-public class StudentDao {
+public class StudentDao implements UserDao {
     private static Map<Integer, Student> students = null;
     static {
         students = new HashMap<Integer, Student>();

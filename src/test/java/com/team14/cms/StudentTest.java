@@ -38,7 +38,7 @@ public class StudentTest {
 
         assertEquals(false, c.classList.containsKey(student));
         student.registerInCourse(c);
-        assertEquals(true, c.waitlist.contains(student));
+        assertEquals(true, c.classList.containsKey(student));
     }
 
     @Test

@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Repository
-public class ProfessorDao {
+public class ProfessorDao implements UserDao {
     private static Map<Integer, Professor> professors = null;
 
     static {

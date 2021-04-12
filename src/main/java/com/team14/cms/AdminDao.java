@@ -1,5 +1,6 @@
 package com.team14.cms;
 
+import org.apache.catalina.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
@@ -7,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Repository
-public class AdminDao {
+public class AdminDao implements UserDao {
     private static Map<Integer, Administration> admins = null;
 
     static {
@@ -33,5 +34,15 @@ public class AdminDao {
 
     public void delete(Integer id){
         admins.remove(id);
+    }
+
+    @Override
+    public Integer getNextId() {
+        return null;
+    }
+
+    @Override
+    public Integer useNextId() {
+        return null;
     }
 }
