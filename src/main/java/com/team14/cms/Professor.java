@@ -25,9 +25,9 @@ public class Professor extends User implements UserPart {
         }
     }
 
-    public void deleteCourseDeliverable(Integer id, String name) {
+    public void deleteCourseDeliverable(Integer cid, String name) {
         for (Course c : courses) {
-            if (c.getId() == id) {
+            if (c.getId() == cid) {
                 for (CourseDeliverable cd : c.courseDeliverables.keySet()) {
                     if (cd.name.equalsIgnoreCase(name)) {
                         c.courseDeliverables.remove(cd);

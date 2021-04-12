@@ -35,11 +35,21 @@ public class ProfessorTest {
 
         assertEquals(true, prof.courses.get(0).courseDeliverables.isEmpty());
 
-        CourseDeliverable cd = prof.cdFactory.createCourseDeliverable(CourseDeliverable.DeliverableType.Assignment, "Test1", "8/3/2010");
+        CourseDeliverable cd = prof.cdFactory.createCourseDeliverable(CourseDeliverable.DeliverableType.Test, "Test1", "8/3/2010");
         prof.courses.get(0).courseDeliverables.put(cd, null);
 
         assertEquals(false, prof.courses.get(0).courseDeliverables.isEmpty());
         //assertEquals(cd, prof.courses.get(0).courseDeliverables.keySet().toArray()[0]);
         assertThat("Same instance of cd", cd, equalTo(prof.courses.get(0).courseDeliverables.keySet().toArray()[0]));
+    }
+
+    public void deleteCourseDeliverableTest() {
+        prof.courses.add(new Course("course", 10230, 0.5, true));
+        CourseDeliverable cd = prof.cdFactory.createCourseDeliverable(CourseDeliverable.DeliverableType.Test, "Test1", "8/3/2010");
+
+        prof.courses.get(0).courseDeliverables.put(cd, null);
+        assertEquals(false, prof.courses.get(0).courseDeliverables.isEmpty());
+        prof.deleteCourseDeliverable(10230, "Test1");
+        assertEquals(true, prof.courses.get(0).courseDeliverables.isEmpty());
     }
 }
