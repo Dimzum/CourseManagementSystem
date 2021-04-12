@@ -8,8 +8,8 @@ public class Course extends Subject {
     public Integer id;
     public String name;
     public double creditValue;
-    List<Course> prerequisites;
-    List<Course> preclusions;
+    List<Course> prerequisites = new ArrayList<>();
+    List<Course> preclusions = new ArrayList<>();
 
     public  Professor prof;             // prof assigned to the course
     public Map<Student, Float> classList = new HashMap<>();    // students registered in the course

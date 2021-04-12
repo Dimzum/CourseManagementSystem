@@ -37,19 +37,18 @@ public class Student extends User implements UserPart {
         this.birthday = birthday;
     }
 
-    // Doesn't actually register student in course
-    // Only adds them to the waitlist until admin accepts the request
     public boolean registerInCourse(Course c) {
         if (coursesTaken.contains(c)){
             return true;
         }
-        if (c.prerequisites == null){
+        if (c.prerequisites.size() == 0){
             this.coursesTaken.add(c);
+            c.addToCourse(this);
             return true;
         }
-        if (Taken == null){
+        /*if (Taken == null){
             return false;
-        }
+        }*/
         for (Course course : c.prerequisites){
             if (Taken.contains(course.getId())){
                 System.out.println(course.getId());
@@ -58,7 +57,9 @@ public class Student extends User implements UserPart {
                 return false;
             }
         }
+
         this.coursesTaken.add(c);
+        c.addToCourse(this);
         return true;
     }
 
@@ -74,11 +75,6 @@ public class Student extends User implements UserPart {
 
         return 0;
     }
-
-    @Override
-    public void update() {
-
-    }
     public boolean isPreLearned(int courseId)
     {
         for(Course c:coursesTaken)
@@ -86,5 +82,10 @@ public class Student extends User implements UserPart {
             if(c.id==courseId) return true;
         }
         return false;
+    }
+
+    @Override
+    public void update() {
+
     }
 }
