@@ -6,7 +6,7 @@ Comp3004-Team14
 - Wei Liu 101031242
 - Jiajun Deng 101112619
 
-To run:
-build cmsApplication
-run CmsAppplication
-in browser -> http://localhost:8080
+To run the application:
+- build CmsApplication
+- run CmsAppplication
+- in browser -> http://localhost:8080
