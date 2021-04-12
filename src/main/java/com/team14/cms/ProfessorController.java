@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collection;
+import java.util.List;
 
 @Controller
 public class ProfessorController {
@@ -147,18 +148,25 @@ public class ProfessorController {
         }
         model.addAttribute("id", id);
         model.addAttribute("course", course);
+        Integer cdid = courseDeliverableDao.getNextId();
         professor.createCourseDeliverable(cid, type, name, deadline);
-        System.out.println("type:"+type);
         if (type == CourseDeliverable.DeliverableType.Assignment){
-            courseDeliverableDao.add(new Assignment(name, deadline));
-            course.mycourseList.add(new Assignment(name, deadline));
+            Assignment a = new Assignment(name, deadline);
+            a.setId(cdid);
+            courseDeliverableDao.add(a);
+            course.mycourseList.add(a);
         }else if (type == CourseDeliverable.DeliverableType.Test){
-            courseDeliverableDao.add(new Test(name, deadline));
-            course.mycourseList.add(new Test(name, deadline));
+            Test t = new Test(name, deadline);
+            t.setId(cdid);
+            courseDeliverableDao.add(t);
+            course.mycourseList.add(t);
         }else if (type == CourseDeliverable.DeliverableType.Exam){
-            courseDeliverableDao.add(new Exam(name, deadline));
-            course.mycourseList.add(new Exam(name, deadline));
+            Exam e = new Exam(name, deadline);
+            e.setId(cdid);
+            courseDeliverableDao.add(e);
+            course.mycourseList.add(e);
         }
+
         courseDeliverableDao.get(id).setCid(course.id);
         Collection<CourseDeliverable> cds = courseDeliverableDao.getAll();
         model.addAttribute("cds", cds);
@@ -198,6 +206,12 @@ public class ProfessorController {
         }
         professor.deleteCourseDeliverable(cid, courseDeliverableDao.get(id).name);
         courseDeliverableDao.delete(id);
+        for (CourseDeliverable cd : courseDao.get(cid).mycourseList){
+            if (cd.getId().equals(id)){
+                courseDao.get(cid).mycourseList.remove(0);
+                break;
+            }
+        }
         model.addAttribute("id", pid);
         model.addAttribute("course", course);
         Collection<CourseDeliverable> cds = courseDeliverableDao.getAll();

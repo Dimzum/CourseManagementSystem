@@ -12,14 +12,14 @@ public class Course extends Subject {
     List<Course> preclusions = new ArrayList<>();
 
     public  Professor prof;             // prof assigned to the course
-    public Map<Student, Float> classList = new HashMap<>();    // students registered in the course
+    public Map<Student, Double> classList = new HashMap<>();    // students registered in the course
 
     public boolean isOpen;            // open for registration
     public List<Student> waitlist = new ArrayList<>();
+    public final int maxWaitlist = 10;
 
-    public Map<CourseDeliverable, Map<Student, Float>> courseDeliverables = new HashMap<>();
+    public Map<CourseDeliverable, Map<Student, Double>> courseDeliverables = new HashMap<>();
     public List<CourseDeliverable> mycourseList=new ArrayList<>();
-    private final int maxWaitlist = 10;
     public void addCourseDeliverable(CourseDeliverable c)
     {
         this.mycourseList.add(c);
@@ -78,13 +78,36 @@ public class Course extends Subject {
         return null;
     }
 
-    public float getGrade(Student student) {
+    public double getGrade(Student student) {
+        if (classList != null){
+            for (Student stu : classList.keySet()){
+                if (stu.getId() == student.getId()){
+                    return classList.get(stu);
+                }
+            }
+        }
         return classList.get(student);
     }
 
     /* Adds a student to the classList and adds them to the list of observers */
     public void addToCourse(Student student) {
-        classList.putIfAbsent(student, null); // a new student won't have a grade yet
+        boolean check = true;
+        for (Student s : classList.keySet()) {
+            if (s.getId() == student.getId()) {
+                check = false;
+                break;
+            }else{
+                continue;
+            }
+        }
+        if (check) {
+            classList.put(student, null);// a new student won't have a grade yet
+            if (courseDeliverables != null){
+                for (CourseDeliverable cd : courseDeliverables.keySet()){
+                    courseDeliverables.get(cd).put(student, 0.00);
+                }
+            }
+        }
         attach(student);
     }
 

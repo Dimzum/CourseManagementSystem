@@ -49,9 +49,11 @@ public class StudentController {
             return "loginStu";
         }
         Collection<Course> taken = null;
-        for (Integer cid : student.Taken){
-            if (courseDao.get(id) != null){
-                taken.add(courseDao.get(id));
+        if (student.Taken == null) {
+            for (Integer cid : student.Taken) {
+                if (courseDao.get(cid) != null) {
+                    taken.add(courseDao.get(cid));
+                }
             }
         }
         model.addAttribute("taken", taken);
@@ -122,6 +124,8 @@ public class StudentController {
 
     @GetMapping(value = "/student/uploadFile/{id}")
     public String uploadFile(@PathVariable("id") Integer id, Model model) {
+
+
         model.addAttribute("id",id);
         return "student/upLoadSuccess";
     }

@@ -37,11 +37,11 @@ public class Professor extends User implements UserPart {
         }
     }
 
-    public float submitIndividualGrade(Course course, Student student) {
+    public double submitIndividualGrade(Course course, Student student) {
         return course.classList.get(student);
     }
 
-    public Map<Student, Float> submitFinalGrades(Course course) {
+    public Map<Student, Double> submitFinalGrades(Course course) {
         return course.classList;
     }
 

@@ -41,7 +41,7 @@ public class Student extends User implements UserPart {
         if (coursesTaken.contains(c)){
             return true;
         }
-        if (c.prerequisites.size() == 0){
+        if (c.prerequisites == null || c.prerequisites.size() == 0){
             this.coursesTaken.add(c);
             c.addToCourse(this);
             return true;

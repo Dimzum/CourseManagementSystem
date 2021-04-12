@@ -241,6 +241,8 @@ public class AdminController {
         }
 
         if (professorDao.get(pid) == null){
+            Collection<Course> courses = courseDao.getAll();
+            model.addAttribute("courses", courses);
             return "admin/courses";
         }
         Professor professor = professorDao.get(pid);
