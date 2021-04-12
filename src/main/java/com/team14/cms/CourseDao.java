@@ -12,9 +12,9 @@ public class CourseDao {
 
     static {
         courseMap = new HashMap<Integer, Course>();
-        courseMap.put(10001, new Course("COMP1405",10001, 0.5, null,false) );
-        courseMap.put(10002, new Course("COMP1406",10002, 0.5, null,false) );
-        courseMap.put(10003, new Course("COMP1407",10003, 0.5, null,false) );
+        courseMap.put(10001, new Course("COMP1405",10001, 0.5, null,null, false) );
+        courseMap.put(10002, new Course("COMP1406",10002, 0.5, null,null, false) );
+        courseMap.put(10003, new Course("COMP1407",10003, 0.5, null,null, false) );
     }
 
     public static Integer getNextId() {

@@ -1,9 +1,6 @@
 package com.team14.cms;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Course extends Subject {
 
@@ -12,6 +9,7 @@ public class Course extends Subject {
     public String name;
     public double creditValue;
     List<Course> prerequisites;
+    List<Course> preclusions;
 
     public  Professor prof;             // prof assigned to the course
     public Map<Student, Float> classList = new HashMap<>();    // students registered in the course
@@ -35,12 +33,13 @@ public class Course extends Subject {
         this.id=id;
         this.isOpen=isOpen;
     }
-    public Course(String name, Integer id, double creditValue, List<Course> prerequisites, boolean isOpen) {
+    public Course(String name, Integer id, double creditValue, List<Course> prerequisites, List<Course> preclusions, boolean isOpen) {
         this.name = name;
         this.id = id;
         this.creditValue = creditValue;
         this.prerequisites = prerequisites;
-        this.isOpen = isOpen;
+        this.preclusions = preclusions;
+        this.isOpen = true;
     }
 
     public Integer getId() {

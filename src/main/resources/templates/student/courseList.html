@@ -50,7 +50,7 @@
                 </form>
             </h1>
             <h1>
-                <form th:action="@{/student/courseList/}+${id}" method="get">
+                <form th:action="@{/student/courselist/}+${id}" method="get">
                     <input value="My Course" type="submit"/>
                 </form>
             </h1>
@@ -90,10 +90,6 @@
                     </tr>
                     </tbody>
                 </table>
-                <br>
-                <form th:action="@{/student/addCourse/}+${id}" method="get">
-                    <input value="ADD A NEW COURSE" type="submit"/>
-                </form>
             </div>
         </div>
     </div>

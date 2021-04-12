@@ -25,11 +25,12 @@ public abstract class Request {
 }
 
 class StuSignupReq extends Request{
-    public String lName, fName, birthday;
-    public StuSignupReq(String fName, String lName, String birthday){
+    public String lName, fName, birthday, taken;
+    public StuSignupReq(String fName, String lName, String birthday, String taken){
         this.fName = fName;
         this.lName = lName;
         this.birthday = birthday;
+        this.taken = taken;
         this.handled = false;
         this.type = "stusignup";
     }

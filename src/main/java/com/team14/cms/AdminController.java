@@ -5,6 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import java.util.Collection;
 
 @Controller
@@ -149,7 +152,7 @@ public class AdminController {
     }
 
     @PostMapping(value = "/student/save/{id}")
-    public String saveStu(@PathVariable("id") Integer id, @RequestParam("fName") String fName, @RequestParam("lName") String lName, @RequestParam("birthday") String birthday, @RequestParam(value = "reqid", required = false) Integer rid, Model model){
+    public String saveStu(@PathVariable("id") Integer id, @RequestParam("fName") String fName, @RequestParam("lName") String lName, @RequestParam("birthday") String birthday, @RequestParam(value = "reqid", required = false) Integer rid, @RequestParam("taken") String taken, Model model){
         Administration admin = adminDao.get(1001);
 
         if (!admin.isLoggedIn()){
@@ -157,6 +160,16 @@ public class AdminController {
         }
 
         Student student = new Student(id, fName, lName, "123456", birthday);
+        String[] lis = taken.split(",");
+        Integer cid;
+        List<Integer> Taken = new ArrayList<Integer>();
+        for (String c : lis){
+            cid = Integer.valueOf(c);
+            if (courseDao.get(cid) != null){
+                Taken.add(cid);
+            }
+        }
+        student.Taken = Taken;
 
         if (student.getId() == studentDao.getNextId()){
             student.setId(studentDao.useNextId());
@@ -220,7 +233,7 @@ public class AdminController {
     }
 
     @PostMapping(value = "/course/save/{id}")
-    public String saveCourse(@PathVariable("id") Integer id, @RequestParam("name") String name, @RequestParam("credit") double credit, @RequestParam("pid") Integer pid, Model model) {
+    public String saveCourse(@PathVariable("id") Integer id, @RequestParam("name") String name, @RequestParam("credit") double credit, @RequestParam("pid") Integer pid, @RequestParam("prereq") String prereq, @RequestParam("preclu") String preclu, Model model) {
         Administration admin = adminDao.get(1001);
 
         if (!admin.isLoggedIn()){
@@ -232,7 +245,34 @@ public class AdminController {
         }
         Professor professor = professorDao.get(pid);
 
-        Course course = new Course(name, id, credit, null, false);
+
+
+        List<Course> prerequisites = new ArrayList<>();
+        List<Course> preclusions = new ArrayList<>();
+        String[] lis1 = prereq.split(",");
+        String[] lis2 = preclu.split(",");
+        Integer cid;
+
+
+        for (String c : lis1){
+            if (c.equals("")){
+                continue;
+            }
+            cid = Integer.valueOf(c);
+            if (courseDao.get(cid) != null) {
+                prerequisites.add(courseDao.get(cid));
+            }
+        }
+        for (String c : lis2){
+            if (c.equals("")){
+                continue;
+            }
+            cid = Integer.valueOf(c);
+            if (courseDao.get(cid) != null) {
+                preclusions.add(courseDao.get(cid));
+            }
+        }
+        Course course = new Course(name, id, credit, prerequisites, preclusions, true);
 
         if (course.getId() == courseDao.getNextId()) {
             course.setId(courseDao.useNextId());

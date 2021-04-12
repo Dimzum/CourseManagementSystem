@@ -69,6 +69,11 @@
             <br>
             <div>Birthday: </div>
             <div th:text="${student.birthday}"></div>
+            <br>
+            <div>Course Taken: </div>
+            <div th:each="c:${taken}">
+                <div th:text="'   '+${c.name}"></div>
+            </div>
         </div>
     </div>
 </div>

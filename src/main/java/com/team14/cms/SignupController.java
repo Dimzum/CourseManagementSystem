@@ -21,9 +21,9 @@ class SignupstuController extends SignupController {
     }
 
     @PostMapping(value = "/student/signup")
-    public String signup(@RequestParam("fName") String fName, @RequestParam("lName") String lName, @RequestParam("birthday") String birthday){
+    public String signup(@RequestParam("fName") String fName, @RequestParam("lName") String lName, @RequestParam("birthday") String birthday, @RequestParam("taken") String taken){
 
-        requestDao.add(new StuSignupReq(fName, lName, birthday));
+        requestDao.add(new StuSignupReq(fName, lName, birthday, taken));
         return "loginStu";
     }
 }

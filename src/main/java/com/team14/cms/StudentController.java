@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Collection;
+
 @Controller
 public class StudentController {
     @Autowired
@@ -30,7 +32,9 @@ public class StudentController {
     public String logout(@PathVariable("id") Integer id) {
         Student student = studentDao.get(id);
 
-        student.logout();
+        if (student != null) {
+            student.logout();
+        }
 
         return "loginStu";
     }
@@ -44,19 +48,26 @@ public class StudentController {
         if (!student.isLoggedIn()) {
             return "loginStu";
         }
+        Collection<Course> taken = null;
+        for (Integer cid : student.Taken){
+            if (courseDao.get(id) != null){
+                taken.add(courseDao.get(id));
+            }
+        }
+        model.addAttribute("taken", taken);
         model.addAttribute("student", student);
         model.addAttribute("id", id);
         return "student/profile";
     }
 
-    @GetMapping(value = "/student/courseList/{id}")
+    @GetMapping(value = "/student/courselist/{id}")
     public String getCourseList(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("courses", studentDao.get(id).coursesTaken);
         model.addAttribute("id", id);
         return "student/courseList";
     }
 
-    @GetMapping(value = "/student/addCourse/{id}")
+    @GetMapping(value = "/student/coursesearch/{id}")
     public String chooseCourse(@PathVariable("id") Integer stuId, Model model) {
         model.addAttribute("id", stuId);
         model.addAttribute("courses", courseDao.getAll());
@@ -66,7 +77,18 @@ public class StudentController {
     @GetMapping(value = "/student/chooseCourse")
     public String addCourse(@RequestParam("courseId") Integer courseId, Model model, @RequestParam("id") Integer studentId) {
         Student student = studentDao.get(studentId);
-        boolean result = student.registerInCourse(courseDao.get(courseId));
+        if (student == null || !student.isLoggedIn){
+            return "loginStu";
+        }
+        Course course = courseDao.get(courseId);
+        if (course == null){
+            model.addAttribute("id", (studentId));
+            model.addAttribute("courses", studentDao.get(studentId).coursesTaken);
+            return "student/courseList";
+        }
+
+        boolean result = student.registerInCourse(course);
+
         if (result) {
             model.addAttribute("id", (studentId));
             model.addAttribute("courses", studentDao.get(studentId).coursesTaken);

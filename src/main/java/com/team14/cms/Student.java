@@ -1,9 +1,15 @@
 package com.team14.cms;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class Student extends User implements UserPart {
+    @Autowired
+    CourseDao courseDao;
+
     @Override
     public void accept(UserPartVisitor v) {
         v.visit(this);
@@ -15,8 +21,11 @@ public class Student extends User implements UserPart {
     public String birthday;
 
     public List<Course> coursesTaken = new ArrayList<>();
+    public Collection<Integer> Taken = null;
 
     public boolean isOnDeansList = false;
+
+    public boolean isHandIn = false;
 
     public Student(int id, String fName, String lName, String password, String birthday) {
         this.id = id;
@@ -30,10 +39,26 @@ public class Student extends User implements UserPart {
 
     // Doesn't actually register student in course
     // Only adds them to the waitlist until admin accepts the request
-    public boolean registerInCourse(Course course) {
-        course.addToWaitlist(this);
-        if(course.id==10003&&!isPreLearned(10002)||course.id==10002&&!isPreLearned(10001)) return false;
-        if(!this.coursesTaken.contains(course))this.coursesTaken.add(course);
+    public boolean registerInCourse(Course c) {
+        if (coursesTaken.contains(c)){
+            return true;
+        }
+        if (c.prerequisites == null){
+            this.coursesTaken.add(c);
+            return true;
+        }
+        if (Taken == null){
+            return false;
+        }
+        for (Course course : c.prerequisites){
+            if (Taken.contains(course.getId())){
+                System.out.println(course.getId());
+                continue;
+            }else{
+                return false;
+            }
+        }
+        this.coursesTaken.add(c);
         return true;
     }
 

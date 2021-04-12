@@ -34,7 +34,9 @@ public class ProfessorController {
     public String logout(@PathVariable("id") Integer id) {
         Professor professor = professorDao.get(id);
 
-        professor.logout();
+        if (professor != null) {
+            professor.logout();
+        }
 
         return "loginProf";
     }

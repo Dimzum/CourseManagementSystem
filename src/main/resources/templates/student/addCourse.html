@@ -39,8 +39,8 @@
 <body>
 <div class="container">
     <div class="header">
-        <form th:action="@{/student/courseList/}+${id}" method="get">
-            <input value="Course List" type="submit"/>
+        <form th:action="@{/student/logout/}+${id}" method="get">
+            <input value="Log out" type="submit"/>
         </form>
     </div>
 
@@ -52,7 +52,7 @@
                 </form>
             </h1>
             <h1>
-                <form th:action="@{/student/courseList/}+${id}" method="get">
+                <form th:action="@{/student/courselist/}+${id}" method="get">
                     <input value="My Course" type="submit"/>
                 </form>
             </h1>
