@@ -247,6 +247,7 @@ public class ProfessorController {
             return "professor/coursePage";
         }
         model.addAttribute("cd", cd);
+        model.addAttribute("students", course.courseDeliverables.get(cd));
         return "professor/modifyCourseDeliverable";
     }
 

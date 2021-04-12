@@ -55,11 +55,22 @@
         </div>
         <div class="maincontent">
             <H1>Courses</H1>
-            <div class="table-responsive">
-                <div th:each="course:${courses}">
-                    <a th:href="@{/professor/}+${id}+@{/coursePage/}+${course.id}" th:text="${course.name}"></a>
-                </div>
-            </div>
+            <table class="table-responsive">
+                <thead>
+                <tr>
+                    <th>CRN</th>
+                    <th>Name</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="course:${courses}">
+                    <td th:text="${course.id}"></td>
+                    <td>
+                        <a th:href="@{/professor/}+${id}+@{/coursePage/}+${course.id}" th:text="${course.name}"></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
             <br>
         </div>
     </div>

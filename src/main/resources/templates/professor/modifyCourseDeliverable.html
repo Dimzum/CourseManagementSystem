@@ -24,7 +24,7 @@
 
         .sidebar{
             float: left;
-            height: 400px;
+            height: 1000px;
             width: 200px;
             background: #FFF;
         }
@@ -75,6 +75,30 @@
                 <br>
                 <input value="SUBMIT" type="submit"/>
             </form>
+        </div>
+        <br>
+        <div>
+            <h2>Submissions</h2>
+            <div>
+                <table class="table-students">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Grade</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="student:${students}">
+                        <td th:text="${student.key.id}"></td>
+                        <td>
+                            <form th:action="@{/professor/}+${id}+@{/course/}+${course.id}+@{/deliverable/}+${cd.id}+@{/markCD}" method="psot">
+                                <input th:value="${student.value}" type="submit"/>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

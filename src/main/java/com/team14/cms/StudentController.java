@@ -117,6 +117,7 @@ public class StudentController {
             model.addAttribute("id", studentId);
             model.addAttribute("deliver", cd);
             model.addAttribute("courseId", courseId);
+            studentDao.get(studentId).submitCourseDeliverable(courseDao.get(courseId), cd);
             return "student/submitFile";
         }
         return "student/noDeliverable";
