@@ -37,7 +37,7 @@ public class Administration extends User implements UserPart {
         }
     }
 
-    public void setProfForCourse(Course course, Professor professor) {
+    public void setProfInCourse(Course course, Professor professor) {
         course.setProf(professor);
     }
 

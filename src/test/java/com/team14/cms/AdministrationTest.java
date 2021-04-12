@@ -13,12 +13,14 @@ public class AdministrationTest {
         admin = new Administration(1001, "admin", "admin", "pass");
     }
 
+    @Test
     public void loginTest() {
         assertEquals(false, admin.isLoggedIn);
         admin.login();
         assertEquals(true, admin.isLoggedIn);
     }
 
+    @Test
     public void logoutTest() {
         assertEquals(false, admin.isLoggedIn);
         admin.login();
@@ -65,12 +67,12 @@ public class AdministrationTest {
     }
 
     @Test
-    public void setProfForCourseTest() {
+    public void setProfInCourseTest() {
         Professor p = new Professor(1003, "prof", "prof", "pass");
         Course c = new Course();
 
         assertEquals(null, c.getProf());
-        admin.setProfForCourse(c, p);
+        admin.setProfInCourse(c, p);
         assertEquals(p.id, c.getProf().id);
     }
 
@@ -93,6 +95,7 @@ public class AdministrationTest {
         assertEquals(true, admin.studentList.isEmpty());
     }
 
+    /*
     @Test
     public void registerStudentInCourseTest() {
         Student student = new Student(1004, null, null, null, null);
@@ -103,4 +106,5 @@ public class AdministrationTest {
         admin.registerStudentInCourse(c);
         assertEquals(true, c.classList.containsKey(student));
     }
+    */
 }

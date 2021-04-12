@@ -21,5 +21,16 @@ public class CourseTest {
 
         assertEquals(101, course.getStudentByID(student.getId()).getId());
         assertEquals("password", course.getStudentByID(student.getId()).getPassword());
+        assertEquals(true, course.classList.containsKey(student));
+    }
+
+    @Test
+    public void removeStudentTest() {
+        Student student = new Student(101, "john", "smith", "password", "2020/01/02");
+
+        course.addToCourse(student);
+        assertEquals(true, course.classList.containsKey(student));
+        course.removeStudent(student);
+        assertEquals(false, course.classList.containsKey(student));
     }
 }
