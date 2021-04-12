@@ -1,10 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
 <head>
-    <script type="text/javascript">
-    </script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Student add Course</title>
+    <title>Student Main Page</title>
     <style type="text/css">
         body{
             background: #FFF ;
@@ -39,8 +37,8 @@
 <body>
 <div class="container">
     <div class="header">
-        <form th:action="@{/student/courseList/}+${id}" method="get">
-            <input value="Course List" type="submit"/>
+        <form th:action="@{/student/logout/}+${id}" method="get">
+            <input value="Log out" type="submit"/>
         </form>
     </div>
 
@@ -63,34 +61,8 @@
             </h1>
         </div>
         <div class="maincontent">
-            <h1>courses</h1>
-            <div class="table-responsive">
-                <table class="table-students">
-                    <thead>
-                    <tr>
-                        <th>Crn</th>
-                        <th>Course Name</th>
-                        <th>Credit</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <h1>Course List</h1>
-                    <tr th:each="course:${courses}">
-                        <td th:text="${course.id}"></td>
-                        <td th:text="${course.name}"></td>
-                        <td th:text="${course.creditValue}"></td>
-                        <td>
-                            <form th:action="@{/student/chooseCourse}" method="get">
-                                <input type="hidden" name="courseId" th:value="${course.getId()}" />
-                                <input type="hidden" name="id" th:value="${id}" />
-                                <input value="ADD" type="submit"/>
-                            </form>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <br>
-            </div>
+            <h1>No deliverable is available.</h1>
+            </form>
         </div>
     </div>
 </div>

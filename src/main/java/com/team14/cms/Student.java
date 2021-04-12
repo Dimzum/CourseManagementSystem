@@ -3,7 +3,7 @@ package com.team14.cms;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Student extends User implements UserPart{
+public class Student extends User implements UserPart {
     @Override
     public void accept(UserPartVisitor v) {
         v.visit(this);
@@ -30,9 +30,11 @@ public class Student extends User implements UserPart{
 
     // Doesn't actually register student in course
     // Only adds them to the waitlist until admin accepts the request
-    public void registerInCourse(Course course) {
-        //course.addToWaitlist(this);
-        course.addToCourse(this);
+    public boolean registerInCourse(Course course) {
+        course.addToWaitlist(this);
+        if(course.id==10003&&!isPreLearned(10002)||course.id==10002&&!isPreLearned(10001)) return false;
+        if(!this.coursesTaken.contains(course))this.coursesTaken.add(course);
+        return true;
     }
 
     public void dropCourse(Course course) {
@@ -51,5 +53,13 @@ public class Student extends User implements UserPart{
     @Override
     public void update() {
 
+    }
+    public boolean isPreLearned(int courseId)
+    {
+        for(Course c:coursesTaken)
+        {
+            if(c.id==courseId) return true;
+        }
+        return false;
     }
 }

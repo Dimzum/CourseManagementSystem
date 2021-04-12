@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Student Main Page</title>
+    <style type="text/css">
+        body {
+            background: #FFF;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .container {
+            background: #FFF;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .header {
+            padding: 10px 0;
+            background: #eee;
+        }
+
+        .sidebar {
+            float: left;
+            width: 200px;
+            background: #FFF;
+        }
+
+        .maincontent {
+            width: 570px;
+            background: #FFF;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <form th:action="@{/student/logout/}+${id}" method="get">
+            <input value="Log out" type="submit"/>
+        </form>
+    </div>
+
+    <div class="content">
+        <div class="sidebar">
+            <h1>
+                <form th:action="@{/student/profile/}+${id}" method="get">
+                    <input value="Profile" type="submit"/>
+                </form>
+            </h1>
+            <h1>
+                <form th:action="@{/student/courseList/}+${id}" method="get">
+                    <input value="My Course" type="submit"/>
+                </form>
+            </h1>
+            <h1>
+                <form th:action="@{/student/coursesearch/}+${id}" method="get">
+                    <input value="Search a Course" type="submit"/>
+                </form>
+            </h1>
+        </div>
+        <div class="maincontent">
+            <H1>Course Deliverable</H1>
+            <h2>
+                <br>
+                <div>Course:</div>
+                <div th:text="${deliver.name}+' ('+${deliver.id}+')'"></div>
+                <br>
+                <div>Course Deliverable Name:</div>
+                <div th:text="${deliver.name}"></div>
+                <br>
+                <div>Course Deliverable Type:</div>
+                <div th:text="${deliver.type}"></div>
+                <br>
+                <div> Course Deliverable Deadline (YYYY/MM/DD):</div>
+                <div th:text="${deliver.deadline}"></div>
+                <br>
+                <form method="get" th:action="@{/student/uploadFile/}+${id}" enctype="multipart/form-data">
+                    <table>
+                        <tr>
+                            <td>
+                                <form:label path="file">Select a file to upload</form:label>
+                            </td>
+                            <td><input type="file" value="file" lang="en"/></td>
+                        </tr>
+                        <tr>
+                            <td><input type="submit" value="Submit" lang="en"/></td>
+                        </tr>
+                    </table>
+                </form>
+            </h2>
+        </div>
+    </div>
+</div>
+</body>
+</html>

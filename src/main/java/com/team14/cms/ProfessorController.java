@@ -29,7 +29,7 @@ public class ProfessorController {
 
     @Autowired
     CourseDeliverableDao courseDeliverableDao;
-
+    CourseDeliverableFactory cdFactory = new CourseDeliverableFactory();
     @GetMapping(value = "/professor/logout/{id}")
     public String logout(@PathVariable("id") Integer id) {
         Professor professor = professorDao.get(id);
@@ -146,13 +146,16 @@ public class ProfessorController {
         model.addAttribute("id", id);
         model.addAttribute("course", course);
         professor.createCourseDeliverable(cid, type, name, deadline);
-
+        System.out.println("type:"+type);
         if (type == CourseDeliverable.DeliverableType.Assignment){
             courseDeliverableDao.add(new Assignment(name, deadline));
+            course.mycourseList.add(new Assignment(name, deadline));
         }else if (type == CourseDeliverable.DeliverableType.Test){
             courseDeliverableDao.add(new Test(name, deadline));
+            course.mycourseList.add(new Test(name, deadline));
         }else if (type == CourseDeliverable.DeliverableType.Exam){
             courseDeliverableDao.add(new Exam(name, deadline));
+            course.mycourseList.add(new Exam(name, deadline));
         }
         courseDeliverableDao.get(id).setCid(course.id);
         Collection<CourseDeliverable> cds = courseDeliverableDao.getAll();

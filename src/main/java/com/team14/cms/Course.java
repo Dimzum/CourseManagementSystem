@@ -20,9 +20,12 @@ public class Course extends Subject {
     public List<Student> waitlist = new ArrayList<>();
 
     public Map<CourseDeliverable, Map<Student, Float>> courseDeliverables = new HashMap<>();
-
+    public List<CourseDeliverable> mycourseList=new ArrayList<>();
     private final int maxWaitlist = 10;
-
+    public void addCourseDeliverable(CourseDeliverable c)
+    {
+        this.mycourseList.add(c);
+    }
     public Course() {
 
     }

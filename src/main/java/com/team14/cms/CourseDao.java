@@ -14,13 +14,14 @@ public class CourseDao {
         courseMap = new HashMap<Integer, Course>();
         courseMap.put(10001, new Course("COMP1405",10001, 0.5, null,false) );
         courseMap.put(10002, new Course("COMP1406",10002, 0.5, null,false) );
+        courseMap.put(10003, new Course("COMP1407",10003, 0.5, null,false) );
     }
 
     public static Integer getNextId() {
         return nextId;
     }
 
-    private static Integer nextId = 10003;
+    private static Integer nextId = 10004;
 
     public void add (Course course){
         course.setId(nextId);

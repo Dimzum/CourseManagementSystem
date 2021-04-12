@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Student Course List</title>
+    <title>My Course List</title>
     <style type="text/css">
         body{
             background: #FFF ;
@@ -50,7 +50,7 @@
                 </form>
             </h1>
             <h1>
-                <form th:action="@{/student/courselist/}+${id}" method="get">
+                <form th:action="@{/student/courseList/}+${id}" method="get">
                     <input value="My Course" type="submit"/>
                 </form>
             </h1>
@@ -75,7 +75,10 @@
                     <h1>Course List</h1>
                     <tr th:each="course:${courses}">
                         <td th:text="${course.id}"></td>
-                        <td th:text="${course.name}"></td>
+                        <td>
+                            <a th:text="${course.name}" th:href="@{/student/submitFile/{courseId}/{id}/(courseId=${course.id},id=${id})}" >
+                            </a>
+                        </td>
                         <td th:text="${course.creditValue}"></td>
                         <td>
                             <form th:action="@{/student/deleteCourse}" method="get">
@@ -88,7 +91,7 @@
                     </tbody>
                 </table>
                 <br>
-                <form th:action="@{/student/chooseCourse/}+${id}" method="get">
+                <form th:action="@{/student/addCourse/}+${id}" method="get">
                     <input value="ADD A NEW COURSE" type="submit"/>
                 </form>
             </div>
