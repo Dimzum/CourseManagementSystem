@@ -172,20 +172,91 @@ public class ProfessorController {
         return "professor/deleteCourseDeliverable";
     }
 
-    @PostMapping(value = "/professor/deleteCourseDeliverable/{id}")
-    public String deleteCourseDeliverable(@PathVariable("id") Integer id,
-                                          @RequestParam("cid") Integer cid,
-                                          @RequestParam("name") String name,
+    @PostMapping(value = "/professor/{pid}/course/{cid}/deliverable/{id}/delete")
+    public String deleteCourseDeliverable(@PathVariable("pid") Integer pid,
+                                          @PathVariable("cid") Integer cid,
+                                          @PathVariable("id") Integer id,
                                           Model model) {
-        Professor professor = professorDao.get(id);
+        Professor professor = professorDao.get(pid);
 
         if (!professor.isLoggedIn()) {
             return "loginProf";
         }
+        Course course = courseDao.get(cid);
 
-        professor.deleteCourseDeliverable(cid, name);
-        model.addAttribute("professor", professor);
-        return "professor/deleteCourseDeliverable";
+        Collection<Course> courses = professor.courses;
+
+        if (course == null){
+            model.addAttribute("id", pid);
+            model.addAttribute("courses", courses);
+            return "professor/profCourses";
+        }
+        professor.deleteCourseDeliverable(cid, courseDeliverableDao.get(id).name);
+        courseDeliverableDao.delete(id);
+        model.addAttribute("id", pid);
+        model.addAttribute("course", course);
+        Collection<CourseDeliverable> cds = courseDeliverableDao.getAll();
+        model.addAttribute("cds", cds);
+        return "professor/coursePage";
+    }
+
+    @GetMapping(value = "/professor/{pid}/course/{cid}/deliverable/{id}/edit")
+    public String eidtCourseDeliverable(@PathVariable("pid") Integer pid,
+                                          @PathVariable("cid") Integer cid,
+                                          @PathVariable("id") Integer id,
+                                          Model model) {
+        Professor professor = professorDao.get(pid);
+
+        if (!professor.isLoggedIn()) {
+            return "loginProf";
+        }
+        Course course = courseDao.get(cid);
+
+        Collection<Course> courses = professor.courses;
+
+        if (course == null){
+            model.addAttribute("id", pid);
+            model.addAttribute("courses", courses);
+            return "professor/profCourses";
+        }
+        model.addAttribute("id", pid);
+        model.addAttribute("course", course);
+        CourseDeliverable cd = courseDeliverableDao.get(id);
+        if (cd == null){
+            Collection<CourseDeliverable> cds = courseDeliverableDao.getAll();
+            model.addAttribute("cds", cds);
+            return "professor/coursePage";
+        }
+        model.addAttribute("cd", cd);
+        return "professor/modifyCourseDeliverable";
+    }
+
+    @PostMapping(value = "/professor/{pid}/course/{cid}/deliverable/{id}/edit")
+    public String saveEidtCourseDeliverable(@PathVariable("pid") Integer pid,
+                                        @PathVariable("cid") Integer cid,
+                                        @PathVariable("id") Integer id,
+                                        @RequestParam("deadline") String deadline,
+                                        Model model) {
+        Professor professor = professorDao.get(pid);
+
+        if (!professor.isLoggedIn()) {
+            return "loginProf";
+        }
+        Course course = courseDao.get(cid);
+
+        Collection<Course> courses = professor.courses;
+
+        if (course == null){
+            model.addAttribute("id", pid);
+            model.addAttribute("courses", courses);
+            return "professor/profCourses";
+        }
+        model.addAttribute("id", pid);
+        model.addAttribute("course", course);
+        courseDeliverableDao.get(id).setDeadline(deadline);
+        Collection<CourseDeliverable> cds = courseDeliverableDao.getAll();
+        model.addAttribute("cds", cds);
+        return "professor/coursePage";
     }
 
 }

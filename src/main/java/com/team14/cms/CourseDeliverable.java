@@ -28,6 +28,13 @@ public abstract class CourseDeliverable {
     public Integer getCid(){
         return cid;
     }
+    public String getDeadline(){
+        return deadline;
+    }
+
+    public void setDeadline(String deadline){
+        this.deadline = deadline;
+    }
 
     public int getGrade() {
         return grade;

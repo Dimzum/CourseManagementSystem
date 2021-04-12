@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Modify A Course Deliverable</title>
+    <style type="text/css">
+        body{
+            background: #FFF ;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .container{
+            background: #FFF;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .header{
+            padding: 10px 0;
+            background: #eee;
+        }
+
+        .sidebar{
+            float: left;
+            height: 400px;
+            width: 200px;
+            background: #FFF;
+        }
+
+        .maincontent{
+            width: 570px;
+            background: #FFF;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <form th:action="@{/professor/logout/}+${id}" method="get">
+            <input value="Log out" type="submit"/>
+        </form>
+    </div>
+    <div class="content">
+        <div class="sidebar">
+            <h1>
+                <form th:action="@{/professor/profile/}+${id}" method="get">
+                    <input value="Profile" type="submit"/>
+                </form>
+                <form th:action="@{/professor/profCourses/}+${id}" method="get">
+                    <input value="Courses" type="submit"/>
+                </form>
+            </h1>
+        </div>
+        <div class="maincontent">
+            <H1>Modify Course Deliverable</H1>
+            <br>
+            <div>Course: </div>
+            <div th:text="${course.name}+' ('+${course.id}+')'"></div>
+            <br>
+            <div>Course Deliverable Name: </div>
+            <div th:text="${cd.name}"></div>
+            <br>
+            <div>Course Deliverable Type: </div>
+            <div th:text="${cd.type}"></div>
+            <br>
+            <div>Old Course Deliverable Deadline (YYYY/MM/DD): </div>
+            <div th:text="${cd.deadline}"></div>
+            <br>
+            <form th:action="@{/professor/}+${id}+@{/course/}+${course.id}+@{/deliverable/}+${cd.id}+@{/edit}" method="post">
+                <div>New Course Deliverable Deadline: </div>
+                <input type="text" name="deadline"/>
+                <br>
+                <br>
+                <input value="SUBMIT" type="submit"/>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
