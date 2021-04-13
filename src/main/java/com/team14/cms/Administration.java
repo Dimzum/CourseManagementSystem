@@ -57,7 +57,7 @@ public class Administration extends User implements UserPart {
     }
 
     @Override
-    public void update() {
+    public void update(Course.State state) {
 
     }
 

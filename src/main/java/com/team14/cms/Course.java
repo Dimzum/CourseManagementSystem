@@ -3,7 +3,12 @@ package com.team14.cms;
 import java.util.*;
 
 public class Course extends Subject {
-
+    public enum State {
+        newProf,
+        addStudent,
+        removeStudent,
+        cdSubmission
+    };
 
     public Integer id;
     public String name;
@@ -62,6 +67,7 @@ public class Course extends Subject {
         }
         this.prof = prof;
         attach(this.prof);
+        notifyObservers(State.newProf);
     }
 
     public List<Student> getClassList() {
@@ -109,6 +115,7 @@ public class Course extends Subject {
             }
         }
         attach(student);
+        notifyObservers(State.addStudent);
     }
 
     public boolean isWaitlistFull() {
@@ -122,18 +129,19 @@ public class Course extends Subject {
     public void removeStudent(Student student) {
         if (!classList.isEmpty() || classList.containsKey(student)) {
             classList.remove(student);
-            notifyObservers();
+            notifyObservers(State.removeStudent);
         }
     }
 
     public void studentSubmitCD(CourseDeliverable deliverable, Student student) {
         courseDeliverables.get(deliverable).put(student, null);
+        notifyObservers(State.cdSubmission);
     }
 
     @Override
-    public void notifyObservers() {
+    public void notifyObservers(Course.State state) {
         for (Observer o : observers) {
-            o.update();
+            o.update(state);
         }
     }
 }

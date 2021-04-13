@@ -11,5 +11,5 @@ public abstract class Subject {
     }
     public void detach(Observer obs) { observers.remove(obs); }
 
-    public abstract void notifyObservers();
+    public abstract void notifyObservers(Course.State state);
 }

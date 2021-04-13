@@ -46,7 +46,7 @@ public class Professor extends User implements UserPart {
     }
 
     @Override
-    public void update() {
+    public void update(Course.State state) {
 
     }
 
