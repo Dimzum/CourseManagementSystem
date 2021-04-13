@@ -54,47 +54,41 @@
             </h1>
         </div>
         <div class="maincontent">
-            <H1 th:text="${course.name}"></H1>
+            <H1 th:text="${course.name}+@{--}+${cd.name}"></H1>
+
             <table class="table-cds">
                 <thead>
                 <tr>
-                    <th>Course Deliverable</th>
-                    <th>Deadline</th>
+                    <th>Student Number</th>
+                    <th>Student Name</th>
+                    <th>Grade</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="cd:${cds}">
-                    <div th:if="${cd.cid} eq ${course.id}">
-                        <td th:text="${cd.name}"></td>
-                        <td th:text="${cd.deadline}"></td>
-                        <td>
-                            <form th:action="@{/professor/}+${id}+@{/course/}+${course.id}+@{/deliverable/}+${cd.id}+@{/edit}" method="get">
-                                <input value="EDIT" type="submit"/>
-                            </form>
-                        </td>
-                        <td>
-                            <form th:action="@{/professor/}+${id}+@{/course/}+${course.id}+@{/deliverable/}+${cd.id}+@{/delete}" method="post">
-                                <input name="_method" type="hidden" value="delete"/>
-                                <input value="DELETE" type="submit"/>
-                            </form>
-                        </td>
-                        <div th:if="${not cd.isGraded}">
+                <tr th:each="student:${students}">
+                    <td th:text="${student.id}"></td>
+                    <td th:text="${student.fName}+' '+${student.lName}"></td>
+                    <div th:if="${student.isHandIn} eq false">
+                        <td>Have not handed in yet</td>
+                    </div>
+                    <div th:if="${student.isHandIn} eq true">
+                        <div th:if="${student.grade} eq -1">
+                            <td>No Grade</td>
                             <td>
-                                <form th:action="@{/professor/}+${id}+@{/course/}+${course.id}+@{/cd/}+${cd.id}" method="get">
-                                    <input value="Submit Grade" type="submit"/>
+                                <form th:action="@{/professor/}+${id}+@{/course/}+${course.id}+@{/cd/}+${cd.id}+@{/student/}+${student.id}+@{/gradeIt}" method="get">
+                                    <input value="Grade it" type="submit"/>
                                 </form>
                             </td>
                         </div>
-                        <div th:if="${cd.isGraded}">
-                            <td th:text="@{(Graded)}"></td>
+                        <div th:if="${student.grade} ge 0">
+                            <td th:text="${student.grade}"></td>
                         </div>
                     </div>
                 </tr>
                 </tbody>
             </table>
-
-            <form th:action="@{/professor/}+${id}+@{/createCourseDeliverable/}+${course.id}" method="get">
-                <input value="Create a Deliverable" type="submit"/>
+            <form th:action="@{/professor/}+${id}+@{/course/}+${course.id}+@{/cd/}+${cd.id}+@{/submitCdGrade}" method="post">
+                <input value="Submit As Deliverable Grade For The Whole Course" type="submit"/>
             </form>
         </div>
     </div>

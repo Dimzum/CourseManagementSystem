@@ -107,10 +107,10 @@ public class Course extends Subject {
             }
         }
         if (check) {
-            classList.put(student, null);// a new student won't have a grade yet
+            classList.put(student, -1.0);// a new student won't have a grade yet
             if (courseDeliverables != null){
                 for (CourseDeliverable cd : courseDeliverables.keySet()){
-                    courseDeliverables.get(cd).put(student, 0.00);
+                    courseDeliverables.get(cd).put(student, -1.0);
                 }
             }
         }
@@ -134,8 +134,19 @@ public class Course extends Subject {
     }
 
     public void studentSubmitCD(CourseDeliverable deliverable, Student student) {
-        courseDeliverables.get(deliverable).put(student, null);
+        //courseDeliverables.get(deliverable).put(student, -1.0);
         notifyObservers(State.cdSubmission);
+    }
+
+    public double getGrade(Integer id){
+        if (!classList.isEmpty()) {
+            for (Student stu : classList.keySet()){
+                if (stu.getId() == (id)){
+                    return classList.get(stu);
+                }
+            }
+        }
+        return -1.0;
     }
 
     @Override

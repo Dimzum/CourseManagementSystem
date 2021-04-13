@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import java.util.Collection;
+import java.util.Locale;
 
 @Controller
 public class AdminController {
@@ -101,7 +102,7 @@ public class AdminController {
             return "loginAdmin";
         }
 
-        Professor professor = new Professor(id, fName, lName, "123456");
+        Professor professor = new Professor(id, fName, lName, fName.toLowerCase(Locale.ROOT));
 
         if (professor.getId() == professorDao.getNextId()){
             professor.setId(professorDao.useNextId());
@@ -159,14 +160,16 @@ public class AdminController {
             return "loginAdmin";
         }
 
-        Student student = new Student(id, fName, lName, "123456", birthday);
+        Student student = new Student(id, fName, lName, fName.toLowerCase(Locale.ROOT), birthday);
         String[] lis = taken.split(",");
         Integer cid;
         List<Integer> Taken = new ArrayList<Integer>();
-        for (String c : lis){
-            cid = Integer.valueOf(c);
-            if (courseDao.get(cid) != null){
-                Taken.add(cid);
+        if (lis[0] != "") {
+            for (String c : lis) {
+                cid = Integer.valueOf(c);
+                if (courseDao.get(cid) != null) {
+                    Taken.add(cid);
+                }
             }
         }
         student.Taken = Taken;
@@ -210,6 +213,15 @@ public class AdminController {
         }
 
         if (courseDao.get(id) != null) {
+            Course course = courseDao.get(id);
+            if (course.classList.size() != 0 && course.classList != null){
+                for (Student stu : course.classList.keySet()){
+                    studentDao.get(stu.getId()).coursesTaken.remove(course);
+                }
+            }
+            if (course.getProf() != null){
+                professorDao.get(course.getProf().getId()).courses.remove(course);
+            }
             courseDao.delete(id);
         }
         Collection<Course> courses = courseDao.getAll();

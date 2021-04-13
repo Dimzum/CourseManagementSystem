@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Controller
@@ -48,8 +49,8 @@ public class StudentController {
         if (!student.isLoggedIn()) {
             return "loginStu";
         }
-        Collection<Course> taken = null;
-        if (student.Taken == null) {
+        Collection<Course> taken = new ArrayList<>();
+        if (student.Taken != null) {
             for (Integer cid : student.Taken) {
                 if (courseDao.get(cid) != null) {
                     taken.add(courseDao.get(cid));
@@ -92,6 +93,7 @@ public class StudentController {
         boolean result = student.registerInCourse(course);
 
         if (result) {
+            courseDao.get(courseId).addToCourse(student);
             model.addAttribute("id", (studentId));
             model.addAttribute("courses", studentDao.get(studentId).coursesTaken);
             return "student/courseList";
@@ -103,6 +105,10 @@ public class StudentController {
 
     @GetMapping(value = "/student/deleteCourse")
     public String deleteCourse(@RequestParam("courseId") Integer courseId, Model model, @RequestParam("id") Integer studentId) {
+        Student student = studentDao.get(studentId);
+        if (student == null || !student.isLoggedIn){
+            return "loginStu";
+        }
         studentDao.get(studentId).coursesTaken.remove(courseDao.get((courseId)));
         model.addAttribute("id", (studentId));
         model.addAttribute("courses", studentDao.get(studentId).coursesTaken);
@@ -111,6 +117,10 @@ public class StudentController {
 
     @GetMapping(value = "/student/submitFile/{courseId}/{id}")
     public String submitFile(@PathVariable("courseId") Integer courseId, Model model, @PathVariable("id") Integer studentId) {
+        Student student = studentDao.get(studentId);
+        if (student == null || !student.isLoggedIn){
+            return "loginStu";
+        }
         int size = courseDao.get(courseId).mycourseList.size();
         if (size > 0) {
             CourseDeliverable cd = courseDao.get(courseId).mycourseList.get(0);
@@ -123,9 +133,24 @@ public class StudentController {
         return "student/noDeliverable";
     }
 
-    @GetMapping(value = "/student/uploadFile/{id}")
-    public String uploadFile(@PathVariable("id") Integer id, Model model) {
+    @GetMapping(value = "/student/uploadFile/{cid}/{id}")
+    public String uploadFile(@PathVariable("cid") Integer cid, @PathVariable("id") Integer id, Model model) {
+        Student student = studentDao.get(id);
+        if (student == null || !student.isLoggedIn){
+            return "loginStu";
+        }
+        Course course = courseDao.get(cid);
 
+        if (course.classList.size() != 0 && course.classList != null){
+            for (Student stu : course.classList.keySet()){
+                System.out.println(stu.getId());
+                if (stu.getId() == id){
+                    System.out.println("same");
+                    stu.isHandIn=true;
+                    break;
+                }
+            }
+        }
 
         model.addAttribute("id",id);
         return "student/upLoadSuccess";

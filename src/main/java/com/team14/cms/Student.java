@@ -20,6 +20,8 @@ public class Student extends User implements UserPart {
     public int yearStanding;
     public String birthday;
 
+    public double grade = -1;
+
     public List<Course> coursesTaken = new ArrayList<>();
     public Collection<Integer> Taken = null;
 
@@ -46,9 +48,9 @@ public class Student extends User implements UserPart {
             c.addToCourse(this);
             return true;
         }
-        /*if (Taken == null){
+        if (Taken == null){
             return false;
-        }*/
+        }
         for (Course course : c.prerequisites){
             if (Taken.contains(course.getId())){
                 System.out.println(course.getId());
@@ -59,7 +61,6 @@ public class Student extends User implements UserPart {
         }
 
         this.coursesTaken.add(c);
-        c.addToCourse(this);
         return true;
     }
 

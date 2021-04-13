@@ -10,7 +10,8 @@ public abstract class CourseDeliverable {
     public String name;
     public String deadline;
     public Integer cid;
-    protected Integer grade;
+
+    public boolean isGraded = false;
 
     public CourseDeliverable() {
 
@@ -34,13 +35,6 @@ public abstract class CourseDeliverable {
 
     public void setDeadline(String deadline){
         this.deadline = deadline;
-    }
-
-    public int getGrade() {
-        return grade;
-    }
-    public void setGrade(int grade) {
-        this.grade = grade;
     }
 
     public abstract DeliverableType getType();

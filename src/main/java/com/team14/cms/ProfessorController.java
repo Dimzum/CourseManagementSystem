@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -153,22 +154,30 @@ public class ProfessorController {
         if (type == CourseDeliverable.DeliverableType.Assignment){
             Assignment a = new Assignment(name, deadline);
             a.setId(cdid);
+            a.setCid(cid);
             courseDeliverableDao.add(a);
             course.mycourseList.add(a);
         }else if (type == CourseDeliverable.DeliverableType.Test){
             Test t = new Test(name, deadline);
             t.setId(cdid);
+            t.setCid(cid);
             courseDeliverableDao.add(t);
             course.mycourseList.add(t);
         }else if (type == CourseDeliverable.DeliverableType.Exam){
             Exam e = new Exam(name, deadline);
             e.setId(cdid);
+            e.setCid(cid);
             courseDeliverableDao.add(e);
             course.mycourseList.add(e);
         }
 
         courseDeliverableDao.get(id).setCid(course.id);
-        Collection<CourseDeliverable> cds = courseDeliverableDao.getAll();
+        Collection<CourseDeliverable> cds = new ArrayList<>();
+        for (CourseDeliverable cd : courseDeliverableDao.getAll()){
+            if (cd.getCid().equals(cid)){
+                cds.add(cd);
+            }
+        }
         model.addAttribute("cds", cds);
         return "professor/coursePage";
     }
@@ -214,7 +223,12 @@ public class ProfessorController {
         }
         model.addAttribute("id", pid);
         model.addAttribute("course", course);
-        Collection<CourseDeliverable> cds = courseDeliverableDao.getAll();
+        Collection<CourseDeliverable> cds = new ArrayList<>();
+        for (CourseDeliverable cd : courseDeliverableDao.getAll()){
+            if (cd.getCid().equals(cid)){
+                cds.add(cd);
+            }
+        }
         model.addAttribute("cds", cds);
         return "professor/coursePage";
     }
@@ -274,9 +288,141 @@ public class ProfessorController {
         model.addAttribute("id", pid);
         model.addAttribute("course", course);
         courseDeliverableDao.get(id).setDeadline(deadline);
-        Collection<CourseDeliverable> cds = courseDeliverableDao.getAll();
+        Collection<CourseDeliverable> cds = new ArrayList<>();
+        for (CourseDeliverable cd : courseDeliverableDao.getAll()){
+            if (cd.getCid().equals(cid)){
+                cds.add(cd);
+            }
+        }
         model.addAttribute("cds", cds);
         return "professor/coursePage";
     }
 
+    @GetMapping(value = "/professor/{pid}/course/{cid}/cd/{cdid}")
+    public String goToGradeDeliPage(@PathVariable("pid") Integer pid, @PathVariable("cid") Integer cid, @PathVariable("cdid") Integer cdid, Model model){
+        Professor professor = professorDao.get(pid);
+
+        if (!professor.isLoggedIn()) {
+            return "loginProf";
+        }
+        Course course = courseDao.get(cid);
+
+        Collection<Student> students = new ArrayList<>();
+        if (course.classList.size() != 0 && course.classList != null){
+            for (Student stu : course.classList.keySet()){
+                stu.grade = course.classList.get(stu);
+                students.add(stu);
+            }
+        }
+        model.addAttribute("students", students);
+        model.addAttribute("id", pid);
+        model.addAttribute("course", courseDao.get(cid));
+        CourseDeliverable cd = courseDeliverableDao.get(cdid);
+        model.addAttribute("cd", cd);
+        return "professor/allDeliGrade";
+    }
+
+    @GetMapping(value = "/professor/{pid}/course/{cid}/cd/{cdid}/student/{sid}/gradeIt")
+    public String goToIndividualGrading(@PathVariable("pid") Integer pid, @PathVariable("cid") Integer cid, @PathVariable("cdid") Integer cdid, @PathVariable("sid") Integer sid, Model model){
+        Professor professor = professorDao.get(pid);
+
+        if (professor == null || !professor.isLoggedIn()) {
+            return "loginProf";
+        }
+        model.addAttribute("id", pid);
+        model.addAttribute("student", studentDao.get(sid));
+        model.addAttribute("course", courseDao.get(cid));
+        model.addAttribute("cd", courseDeliverableDao.get(cdid));
+
+        return "professor/indiDeliGradeForm";
+    }
+
+    @PostMapping(value = "/professor/{pid}/course/{cid}/cd/{cdid}/student/{sid}/gradeIt")
+    public String saveIndividualGrading(@PathVariable("pid") Integer pid, @PathVariable("cid") Integer cid, @PathVariable("cdid") Integer cdid, @PathVariable("sid") Integer sid, @RequestParam("grade") double grade, Model model){
+        Professor professor = professorDao.get(pid);
+
+        if (professor == null || !professor.isLoggedIn()) {
+            return "loginProf";
+        }
+        Course course = courseDao.get(cid);
+
+        Collection<Student> students = new ArrayList<>();
+        System.out.println(course.classList.size());
+        if (course.classList.size() != 0 && course.classList != null){
+            for (Student stu : course.classList.keySet()){
+                System.out.println(stu.getId());
+                if (stu.getId() == sid){
+                    if (grade < 0 || grade > 100){
+                        model.addAttribute("id", pid);
+                        model.addAttribute("student", studentDao.get(sid));
+                        model.addAttribute("course", courseDao.get(cid));
+                        model.addAttribute("cd", courseDeliverableDao.get(cdid));
+
+                        return "professor/indiDeliGradeForm";
+                    }
+                    course.classList.put(stu, grade);
+                }
+                stu.grade = course.classList.get(stu);
+                students.add(stu);
+            }
+        }
+        model.addAttribute("students", students);
+        model.addAttribute("id", pid);
+        model.addAttribute("course", courseDao.get(cid));
+        CourseDeliverable cd = courseDeliverableDao.get(cdid);
+        model.addAttribute("cd", cd);
+        return "professor/allDeliGrade";
+
+    }
+
+    @PostMapping(value = "/professor/{pid}/course/{cid}/cd/{cdid}/submitCdGrade")
+    public String saveAllDeliGrade(@PathVariable("pid") Integer pid, @PathVariable("cid") Integer cid, @PathVariable("cdid") Integer cdid, Model model){
+        Professor professor = professorDao.get(pid);
+
+        if (professor == null || !professor.isLoggedIn()) {
+            return "loginProf";
+        }
+        Course course = courseDao.get(cid);
+
+        Collection<Student> students = new ArrayList<>();
+
+        boolean check = true;
+        if (course.classList.size() != 0 && course.classList != null){
+            for (Student stu : course.classList.keySet()){
+                System.out.println(stu.isHandIn);
+                System.out.println(stu.grade);
+                students.add(stu);
+                if (stu.isHandIn == true && course.getGrade(stu.getId()) == -1){
+                    System.out.println("wrong");
+                    check = false;
+                }
+                if (stu.isHandIn == false && course.getGrade(stu.getId()) == -1){
+                    course.classList.put(stu, 0.0);
+                }
+                if (stu.isHandIn == true && course.getGrade(stu.getId()) >= 0){
+                    course.classList.put(stu, stu.grade);
+                }
+                stu.grade = course.classList.get(stu);
+            }
+        }
+        if (!check){
+            model.addAttribute("students", students);
+            model.addAttribute("id", pid);
+            model.addAttribute("course", courseDao.get(cid));
+            CourseDeliverable cd = courseDeliverableDao.get(cdid);
+            model.addAttribute("cd", cd);
+            return "professor/allDeliGrade";
+        }
+        courseDeliverableDao.get(cdid).isGraded = true;
+        model.addAttribute("id", pid);
+        model.addAttribute("course", course);
+        Collection<CourseDeliverable> cds = new ArrayList<>();
+        for (CourseDeliverable cd : courseDeliverableDao.getAll()){
+            if (cd.getCid().equals(cid)){
+                cds.add(cd);
+            }
+        }
+        model.addAttribute("cds", cds);
+        return "professor/coursePage";
+    }
 }
