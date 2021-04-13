@@ -10,6 +10,7 @@ To run the application:
 - download and extract zip
 - open in IDE
   - in our case we used intellij idea which required us to import the MAven build script then refresh Maven projects
+![import-maven](https://user-images.githubusercontent.com/18056188/114542295-be939c80-9c25-11eb-96ca-c5f5cc114a1c.PNG)
 - build CmsApplication
 - run CmsAppplication
 - in browser -> http://localhost:8080
